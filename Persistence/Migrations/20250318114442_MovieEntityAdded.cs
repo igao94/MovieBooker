@@ -22,7 +22,7 @@ namespace Persistence.Migrations
                     ReleaseDate = table.Column<DateOnly>(type: "date", nullable: false),
                     Director = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     PosterUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },

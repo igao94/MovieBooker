@@ -8,7 +8,7 @@ public class Movie : BaseEntity
     public DateOnly ReleaseDate { get; set; }
     public string Director { get; set; } = string.Empty;
     public string? Language { get; set; }
-    public TimeSpan Duration { get; set; }
+    public string Duration { get; set; } = string.Empty;
     public decimal? Rating { get; set; }
     public string? PosterUrl { get; set; }
 }

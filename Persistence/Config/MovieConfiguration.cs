@@ -16,6 +16,8 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
 
         builder.Property(m => m.Director).IsRequired();
 
+        builder.Property(m => m.Duration).IsRequired();
+
         builder.Property(m => m.Rating).HasColumnType("decimal(18,2)");
     }
 }
