@@ -8,16 +8,18 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class MoviesController(IUnitOfWork unitOfWork) : ControllerBase
 {
+    private readonly IGenericRepository<Movie> _repository = unitOfWork.Repository<Movie>();
+
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<Movie>>> GetMovies()
     {
-        return Ok(await unitOfWork.Repository<Movie>().GetAllAsync());
+        return Ok(await _repository.GetAllAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Movie>> GetById(string id)
     {
-        var activity = await unitOfWork.Repository<Movie>().GetByIdAsync(id);
+        var activity = await _repository.GetByIdAsync(id);
 
         if (activity is null) return NotFound();
 
@@ -27,7 +29,7 @@ public class MoviesController(IUnitOfWork unitOfWork) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Movie>> AddMovie(Movie movie)
     {
-        unitOfWork.Repository<Movie>().Add(movie);
+        _repository.Add(movie);
 
         var result = await unitOfWork.CompleteAsync();
 
@@ -37,7 +39,9 @@ public class MoviesController(IUnitOfWork unitOfWork) : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateMovie(string id, Movie movie)
     {
-        unitOfWork.Repository<Movie>().Update(movie);
+        if (!await _repository.ExsistsAsync(id)) return BadRequest("Movie doesn't exist.");
+
+        _repository.Update(movie);
 
         var result = await unitOfWork.CompleteAsync();
 
@@ -47,11 +51,11 @@ public class MoviesController(IUnitOfWork unitOfWork) : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteMovie(string id)
     {
-        var movie = await unitOfWork.Repository<Movie>().GetByIdAsync(id);
+        var movie = await _repository.GetByIdAsync(id);
 
         if (movie is null) return NotFound();
 
-        unitOfWork.Repository<Movie>().Remove(movie);
+        _repository.Remove(movie);
 
         var result = await unitOfWork.CompleteAsync();
 

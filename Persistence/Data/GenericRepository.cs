@@ -6,20 +6,22 @@ namespace Persistence.Data;
 
 public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> where T : BaseEntity
 {
-    public void Add(T entity) => context.Set<T>().Add(entity);
+    private readonly DbSet<T> _context = context.Set<T>();
 
-    public async Task<IReadOnlyList<T>> GetAllAsync() => await context.Set<T>().ToListAsync();
+    public void Add(T entity) => _context.Add(entity);
 
-    public async Task<T?> GetByIdAsync(string id) => await context.Set<T>().FindAsync(id);
+    public async Task<IReadOnlyList<T>> GetAllAsync() => await _context.ToListAsync();
 
-    public void Remove(T entity) => context.Set<T>().Remove(entity);
+    public async Task<T?> GetByIdAsync(string id) => await _context.FindAsync(id);
+
+    public void Remove(T entity) => _context.Remove(entity);
 
     public void Update(T entity)
     {
-        context.Set<T>().Attach(entity);
+        _context.Attach(entity);
 
         context.Entry(entity).State = EntityState.Modified;
     }
 
-    public async Task<bool> ExsistsAsync(string id) => await context.Set<T>().AnyAsync(x => x.Id == id);
+    public async Task<bool> ExsistsAsync(string id) => await _context.AnyAsync(x => x.Id == id);
 }
