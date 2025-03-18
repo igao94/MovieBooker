@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
 namespace API.Extensions;
@@ -9,10 +10,6 @@ public static class ApplicationServiceExtensions
         IConfiguration config)
     {
         services.AddControllers();
-
-        services.AddEndpointsApiExplorer();
-
-        services.AddSwaggerGen();
 
         services.AddDbContext<AppDbContext>(options =>
         {
@@ -27,6 +24,10 @@ public static class ApplicationServiceExtensions
                 options.UseSqlServer(config.GetConnectionString("SqlServer"));
             }
         });
+
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
