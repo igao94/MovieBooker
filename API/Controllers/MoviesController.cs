@@ -1,64 +1,47 @@
-﻿using Domain.Entities;
-using Domain.Interfaces;
+﻿using Application.Movies.Commands.AddMovie;
+using Application.Movies.Commands.DeleteMovie;
+using Application.Movies.Commands.UpdateMovie;
+using Application.Movies.DTOs;
+using Application.Movies.Queries.GetAllMovies;
+using Application.Movies.Queries.GetMovieById;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class MoviesController(IUnitOfWork unitOfWork) : ControllerBase
+public class MoviesController : BaseApiController
 {
-    private readonly IGenericRepository<Movie> _repository = unitOfWork.Repository<Movie>();
-
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<Movie>>> GetMovies()
     {
-        return Ok(await _repository.GetAllAsync());
+        return HandleResult(await Mediator.Send(new GetAllMoviesQuery()));
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Movie>> GetById(string id)
     {
-        var activity = await _repository.GetByIdAsync(id);
-
-        if (activity is null) return NotFound();
-
-        return activity;
+        return HandleResult(await Mediator.Send(new GetMovieByIdQuery(id)));
     }
 
     [HttpPost]
-    public async Task<ActionResult<Movie>> AddMovie(Movie movie)
+    public async Task<ActionResult<Movie>> AddMovie(CreateMovieDto movieDto)
     {
-        _repository.Add(movie);
+        var result = await Mediator.Send(new AddMovieCommand(movieDto));
 
-        var result = await unitOfWork.CompleteAsync();
-
-        return result ? CreatedAtAction(nameof(GetById), new { id = movie.Id }, movie) : NotFound();
+        return HandleCreatedResult<Movie>(nameof(GetById), new { id = result.Value?.Id }, result.Value);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateMovie(string id, Movie movie)
+    public async Task<ActionResult> UpdateMovie(string id, UpdateMovieDto movieDto)
     {
-        if (!await _repository.ExsistsAsync(id)) return BadRequest("Movie doesn't exist.");
+        movieDto.Id = id;
 
-        _repository.Update(movie);
-
-        var result = await unitOfWork.CompleteAsync();
-
-        return result ? NoContent() : BadRequest("Problem updating movie");
+        return HandleResult(await Mediator.Send(new UpdateMovieCommand(movieDto)));
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteMovie(string id)
     {
-        var movie = await _repository.GetByIdAsync(id);
-
-        if (movie is null) return NotFound();
-
-        _repository.Remove(movie);
-
-        var result = await unitOfWork.CompleteAsync();
-
-        return result ? NoContent() : BadRequest("Problem deleting movie.");
+        return HandleResult(await Mediator.Send(new DeleteMovieCommand(id)));
     }
 }

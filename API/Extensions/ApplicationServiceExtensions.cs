@@ -1,4 +1,6 @@
-﻿using Domain.Interfaces;
+﻿using Application.Core;
+using Application.Movies.Queries.GetAllMovies;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
@@ -28,6 +30,10 @@ public static class ApplicationServiceExtensions
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesQuery).Assembly));
 
         return services;
     }
