@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Common.Constants;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Persistence.Data;
@@ -13,8 +14,8 @@ public class Seed
         {
             List<IdentityRole> roles =
             [
-                new() { Name = "User" } ,
-                new() { Name = "Admin" }
+                new() { Name = UserRoles.User } ,
+                new() { Name = UserRoles.Admin }
             ];
 
             foreach (var role in roles)
@@ -36,7 +37,7 @@ public class Seed
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");
 
-            await userManager.AddToRoleAsync(admin, "Admin");
+            await userManager.AddToRoleAsync(admin, UserRoles.Admin);
 
             List<User> users =
             [
@@ -72,7 +73,7 @@ public class Seed
             {
                 await userManager.CreateAsync(user, "Pa$$W0rd");
 
-                await userManager.AddToRoleAsync(user, "User");
+                await userManager.AddToRoleAsync(user, UserRoles.User);
             }
         }
 
