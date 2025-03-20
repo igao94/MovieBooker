@@ -1,6 +1,9 @@
-﻿using Application.Core;
+﻿using API.Middleware;
+using Application.Core;
 using Application.Movies.Queries.GetAllMovies;
+using Application.Movies.Validators;
 using Domain.Interfaces;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
@@ -33,7 +36,16 @@ public static class ApplicationServiceExtensions
 
         services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesQuery).Assembly));
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesQuery).Assembly);
+
+            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        });
+
+        services.AddTransient<ExceptionMiddleware>();
+
+        services.AddValidatorsFromAssemblyContaining<CreateMovieValidator>();
 
         return services;
     }
