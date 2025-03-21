@@ -4,6 +4,8 @@ using Application.Movies.Queries.GetAllMovies;
 using Application.Movies.Validators;
 using Domain.Interfaces;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
@@ -14,7 +16,12 @@ public static class ApplicationServiceExtensions
     public static IServiceCollection AddApplicationServices(this IServiceCollection services,
         IConfiguration config)
     {
-        services.AddControllers();
+        services.AddControllers(opt =>
+        {
+            var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            opt.Filters.Add(new AuthorizeFilter(policy));
+        });
 
         services.AddDbContext<AppDbContext>(options =>
         {
@@ -31,6 +38,8 @@ public static class ApplicationServiceExtensions
         });
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+        services.AddScoped<IAccountRepository, AccountRepository>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

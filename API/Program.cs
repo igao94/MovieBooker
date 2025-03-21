@@ -12,8 +12,6 @@ builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Services.AddIdentityServices(builder.Configuration);
 
-builder.Services.AddIdentityApiEndpoints<User>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -13,7 +13,7 @@ public class TokenService(IConfiguration config, UserManager<User> userManager) 
 {
     public async Task<string> GetTokenAsync(User user)
     {
-        var tokenKey = config["Authentication:TokenKey"]
+        var tokenKey = config["Jwt:TokenKey"]
             ?? throw new Exception("Can't access tokenKey.");
 
         if (tokenKey.Length < 64) throw new Exception("TokenKey needs to be longer.");
@@ -39,8 +39,8 @@ public class TokenService(IConfiguration config, UserManager<User> userManager) 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Issuer = config["Authentication:Issuer"],
-            Audience = config["Authentication:Audience"],
+            Issuer = config["Jwt:Issuer"],
+            Audience = config["Jwt:Audience"],
             SigningCredentials = creds,
             Expires = DateTime.UtcNow.AddDays(1)
         };
