@@ -4,6 +4,7 @@ using Application.Movies.Commands.UpdateMovie;
 using Application.Movies.DTOs;
 using Application.Movies.Queries.GetAllMovies;
 using Application.Movies.Queries.GetMovieById;
+using Domain.Common.Constants;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ public class MoviesController : BaseApiController
         return HandleResult(await Mediator.Send(new GetMovieByIdQuery(id)));
     }
 
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
     [HttpPost]
     public async Task<ActionResult<Movie>> AddMovie(CreateMovieDto movieDto)
     {
@@ -32,6 +34,7 @@ public class MoviesController : BaseApiController
         return HandleCreatedResult<Movie>(nameof(GetById), new { id = result.Value?.Id }, result.Value);
     }
 
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateMovie(string id, UpdateMovieDto movieDto)
     {
@@ -40,6 +43,7 @@ public class MoviesController : BaseApiController
         return HandleResult(await Mediator.Send(new UpdateMovieCommand(movieDto)));
     }
 
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteMovie(string id)
     {

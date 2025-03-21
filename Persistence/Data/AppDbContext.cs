@@ -15,27 +15,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
         base.OnModelCreating(builder);
 
         builder.ApplyConfigurationsFromAssembly(typeof(MovieConfiguration).Assembly);
-
-        ConfigureDateTimeProperties(builder);
-    }
-
-    private static void ConfigureDateTimeProperties(ModelBuilder builder)
-    {
-        foreach (var entityType in builder.Model.GetEntityTypes())
-        {
-            foreach (var property in entityType.GetProperties())
-            {
-                if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
-                {
-                    var converter = new ValueConverter<DateTime, DateTime>(
-                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToUniversalTime(),
-                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
-
-                    builder.Entity(entityType.ClrType)
-                        .Property(property.Name)
-                        .HasConversion(converter);
-                }
-            }
-        }
     }
 }

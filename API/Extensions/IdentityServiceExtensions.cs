@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Domain.Common.Constants;
 using Domain.Entities;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,6 +37,9 @@ public static class IdentityServiceExtensions
                     IssuerSigningKey = key
                 };
             });
+
+        services.AddAuthorizationBuilder()
+            .AddPolicy(PolicyTypes.RequireAdminRole, policy => policy.RequireRole(UserRoles.Admin));
 
         return services;
     }
