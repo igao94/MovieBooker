@@ -1,9 +1,11 @@
 ﻿using API.Middleware;
 using Application.Core;
+using Application.Interfaces;
 using Application.Movies.Queries.GetAllMovies;
 using Application.Movies.Validators;
 using Domain.Interfaces;
 using FluentValidation;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +44,10 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IAccountRepository, AccountRepository>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<IUserAccessor, UserAccessor>();
+
+        services.AddHttpContextAccessor();
 
         services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 

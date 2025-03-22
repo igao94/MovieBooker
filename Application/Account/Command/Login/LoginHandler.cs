@@ -24,6 +24,7 @@ public class LoginHandler(IUnitOfWork unitOfWork,
 
         return Result<AccountDto>.Success(new AccountDto
         {
+            Id = user.Id,
             Username = user.UserName,
             Email = user.Email,
             Token = token,

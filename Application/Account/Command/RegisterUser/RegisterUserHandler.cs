@@ -39,6 +39,7 @@ public class RegisterUserHandler(IUnitOfWork unitOfWork,
 
         return Result<AccountDto>.Success(new AccountDto
         {
+            Id = user.Id,
             Email = user.Email,
             Username = user.UserName,
             Token = token,
