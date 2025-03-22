@@ -11,4 +11,6 @@ public class Movie : BaseEntity
     public string Duration { get; set; } = string.Empty;
     public decimal? Rating { get; set; }
     public string? PosterUrl { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public ICollection<MovieActor> Actors { get; set; } = [];
 }

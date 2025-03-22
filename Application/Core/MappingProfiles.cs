@@ -1,4 +1,5 @@
-﻿using Application.Movies.DTOs;
+﻿using Application.Actors.DTOs;
+using Application.Movies.DTOs;
 using AutoMapper;
 using Domain.Entities;
 
@@ -13,5 +14,9 @@ public class MappingProfiles : Profile
         CreateMap<CreateMovieDto, Movie>();
 
         CreateMap<UpdateMovieDto, Movie>();
+
+        CreateMap<CreateActorDto, Actor>();
+
+        CreateMap<Actor, ActorDto>();
     }
 }

@@ -24,4 +24,9 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
     }
 
     public async Task<bool> ExsistsAsync(string id) => await _context.AnyAsync(x => x.Id == id);
+
+    public async Task<T?> GetByCompositeKeyAsync(string id, string secondId)
+    {
+        return await _context.FindAsync(id, secondId);
+    }
 }

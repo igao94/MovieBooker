@@ -71,7 +71,7 @@ public class Seed
 
             foreach (var user in users)
             {
-                await userManager.CreateAsync(user, "Pa$$W0rd");
+                await userManager.CreateAsync(user, "Pa$$w0rd");
 
                 await userManager.AddToRoleAsync(user, UserRoles.User);
             }
