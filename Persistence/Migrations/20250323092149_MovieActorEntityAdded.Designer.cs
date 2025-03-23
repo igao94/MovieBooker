@@ -12,7 +12,7 @@ using Persistence.Data;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250322131703_MovieActorEntityAdded")]
+    [Migration("20250323092149_MovieActorEntityAdded")]
     partial class MovieActorEntityAdded
     {
         /// <inheritdoc />
@@ -42,7 +42,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actor");
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("Domain.Entities.Movie", b =>
