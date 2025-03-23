@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Specifications;
 
 namespace Persistence.Data;
 
@@ -28,5 +29,20 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
     public async Task<T?> GetByCompositeKeyAsync(string id, string secondId)
     {
         return await _context.FindAsync(id, secondId);
+    }
+
+    public async Task<T?> GetEntityWithSpecAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).FirstOrDefaultAsync();
+    }
+
+    public async Task<IReadOnlyList<T>> GetEntitiesWithSpecAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).ToListAsync();
+    }
+
+    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+    {
+        return SpecificationEvaluator<T>.GetQuery(_context, spec);
     }
 }

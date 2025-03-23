@@ -18,5 +18,10 @@ public class MappingProfiles : Profile
         CreateMap<CreateActorDto, Actor>();
 
         CreateMap<Actor, ActorDto>();
+
+        CreateMap<MovieActor, ActorDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ActorId))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Actor.FullName))
+            .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => src.Actor.PictureUrl));
     }
 }

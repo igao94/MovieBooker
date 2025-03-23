@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
+using Persistence.Specifications.MoviesSpecification;
 
 namespace Application.Movies.Queries.GetMovieById;
 
@@ -12,7 +13,9 @@ public class GetMovieByIdHandler(IUnitOfWork unitOfWork,
 {
     public async Task<Result<MovieDto>> Handle(GetMovieByIdQuery request, CancellationToken cancellationToken)
     {
-        var movie = await unitOfWork.Repository<Movie>().GetByIdAsync(request.Id);
+        var spec = new MovieSpecification(request.Id);
+
+        var movie = await unitOfWork.Repository<Movie>().GetEntityWithSpecAsync(spec);
 
         if (movie is null) return Result<MovieDto>.Failure("Movie not found.", 404);
 

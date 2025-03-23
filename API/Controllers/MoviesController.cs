@@ -7,15 +7,16 @@ using Application.Movies.Queries.GetMovieById;
 using Domain.Common.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Specifications.MoviesSpecification;
 
 namespace API.Controllers;
 
 public class MoviesController : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<MovieDto>>> GetMovies()
+    public async Task<ActionResult<IReadOnlyList<MovieDto>>> GetMovies([FromQuery] MovieSpecParams specParams)
     {
-        return HandleResult(await Mediator.Send(new GetAllMoviesQuery()));
+        return HandleResult(await Mediator.Send(new GetAllMoviesQuery(specParams)));
     }
 
     [HttpGet("{id}")]

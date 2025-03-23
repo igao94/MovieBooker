@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
+using Persistence.Specifications.MoviesSpecification;
 
 namespace Application.Movies.Queries.GetAllMovies;
 
@@ -13,7 +14,9 @@ public class GetAllMoviesHandler(IUnitOfWork unitOfWork,
     public async Task<Result<IReadOnlyList<MovieDto>>> Handle(GetAllMoviesQuery request,
         CancellationToken cancellationToken)
     {
-        var movies = await unitOfWork.Repository<Movie>().GetAllAsync();
+        var spec = new MovieSpecification(request.SpecParams);
+
+        var movies = await unitOfWork.Repository<Movie>().GetEntitiesWithSpecAsync(spec);
 
         return Result<IReadOnlyList<MovieDto>>.Success(mapper.Map<IReadOnlyList<MovieDto>>(movies));
     }

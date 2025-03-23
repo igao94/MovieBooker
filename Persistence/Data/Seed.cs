@@ -144,6 +144,71 @@ public class Seed
                     Language = "English",
                     Duration = "2 hours, 14 minutes",
                     Rating = 7.3m
+                },
+
+                new ()
+                {
+                    Id = "inception-id",
+                    Title = "Inception",
+                    Genre = "Action, Adventure, Sci-Fi, Thriller",
+                    Description = "A thief who enters the dreams of others to steal secrets finds himself tasked with planting an idea into the mind of a CEO.",
+                    ReleaseDate = new DateOnly(2010, 7, 16),
+                    Director = "Christopher Nolan",
+                    Language = "English",
+                    Duration = "2 hours, 28 minutes",
+                    Rating = 8.8m
+                },
+
+                new ()
+                {
+                    Id = "interstellar-id",
+                    Title = "Interstellar",
+                    Genre = "Adventure, Drama, Sci-Fi",
+                    Description = "A team of astronauts undertakes a dangerous mission through a wormhole near Saturn in search of a new habitable planet for humanity.",
+                    ReleaseDate = new DateOnly(2014, 11, 7),
+                    Director = "Christopher Nolan",
+                    Language = "English",
+                    Duration = "2 hours, 49 minutes",
+                    Rating = 8.6m
+                },
+
+                new ()
+                {
+                    Id = "theMartian-id",
+                    Title = "The Martian",
+                    Genre = "Adventure, Drama, Sci-Fi",
+                    Description = "An astronaut stranded on Mars must find a way to survive while NASA works to bring him back home.",
+                    ReleaseDate = new DateOnly(2015, 10, 2),
+                    Director = "Ridley Scott",
+                    Language = "English",
+                    Duration = "2 hours, 24 minutes",
+                    Rating = 8.0m
+                },
+
+                new ()
+                {
+                    Id = "forrestGump-id",
+                    Title = "Forrest Gump",
+                    Genre = "Drama, Romance",
+                    Description = "The life journey of a man with a low IQ, who unwittingly becomes part of many significant historical events.",
+                    ReleaseDate = new DateOnly(1994, 7, 6),
+                    Director = "Robert Zemeckis",
+                    Language = "English",
+                    Duration = "2 hours, 22 minutes",
+                    Rating = 8.8m
+                },
+
+                new ()
+                {
+                    Id = "shawshankRedemption-id",
+                    Title = "The Shawshank Redemption",
+                    Genre = "Drama",
+                    Description = "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+                    ReleaseDate = new DateOnly(1994, 10, 14),
+                    Director = "Frank Darabont",
+                    Language = "English",
+                    Duration = "2 hours, 22 minutes",
+                    Rating = 9.3m
                 }
 
             ];
