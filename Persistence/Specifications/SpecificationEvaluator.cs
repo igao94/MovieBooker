@@ -10,10 +10,6 @@ public class SpecificationEvaluator<T> where T : BaseEntity
     {
         var query = inputQuery;
 
-        query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
-        
-        query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
-
         if (spec.Criteria is not null)
         {
             query = query.Where(spec.Criteria);
@@ -28,6 +24,10 @@ public class SpecificationEvaluator<T> where T : BaseEntity
         {
             query = query.OrderByDescending(spec.OrderByDescending);
         }
+
+        query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+        
+        query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
 
         return query;
     }

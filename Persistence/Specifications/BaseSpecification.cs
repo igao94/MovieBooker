@@ -5,7 +5,7 @@ namespace Persistence.Specifications;
 
 public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecification<T>
 {
-    public Expression<Func<T, bool>>? Criteria => criteria;
+    public Expression<Func<T, bool>>? Criteria { get; } = criteria;
 
     public Expression<Func<T, object>>? OrderBy { get; private set; }
 
@@ -18,8 +18,8 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     protected void AddInclude(Expression<Func<T, object>> includeExpression)
     {
         Includes.Add(includeExpression);
-    }    
-    
+    }
+
     protected void AddInclude(string includeString)
     {
         IncludeStrings.Add(includeString);

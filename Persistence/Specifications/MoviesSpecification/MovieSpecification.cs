@@ -11,10 +11,10 @@ public class MovieSpecification : BaseSpecification<Movie>
 
     public MovieSpecification(MovieSpecParams specParams) : base(m =>
         (string.IsNullOrEmpty(specParams.Search) || m.Title.ToLower().Contains(specParams.Search)) &&
-        (!specParams.Genres.Any() || specParams.Genres.Any(g => m.Genre.Contains(g))))
+        (!specParams.Genres.Any() || specParams.Genres.Any(g => m.Genre.Contains(g))) &&
+        (!specParams.Actors.Any() || m.Actors.Any(a => specParams.Actors
+            .Any(actor => a.Actor.FullName.Contains(actor.Trim())))))
     {
-        AddInclude(m => m.Actors);
-
         AddInclude("Actors.Actor");
 
         switch (specParams.Sort)
