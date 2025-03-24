@@ -8,6 +8,8 @@ public class MovieActorConfiguration : IEntityTypeConfiguration<MovieActor>
 {
     public void Configure(EntityTypeBuilder<MovieActor> builder)
     {
+        builder.HasQueryFilter(ma => ma.Movie.IsActive);
+
         builder.Ignore(ma => ma.Id);
 
         builder.HasKey(ma => new { ma.MovieId, ma.ActorId });

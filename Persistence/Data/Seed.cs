@@ -91,7 +91,8 @@ public class Seed
                     Director = "Anthony and Joe Russo",
                     Language = "English",
                     Duration = "3 hours, 2 minutes",
-                    Rating = 8.4m
+                    Rating = 8.4m,
+                    IsActive = true
                 },
 
                 new ()
@@ -104,7 +105,8 @@ public class Seed
                     Director = "Jon Favreau",
                     Language = "English",
                     Duration = "2 hours, 6 minutes",
-                    Rating = 7.9m
+                    Rating = 7.9m,
+                    IsActive = true
                 },
 
                 new ()
@@ -117,7 +119,8 @@ public class Seed
                     Director = "Jon Watts",
                     Language = "English",
                     Duration = "2 hours, 28 minutes",
-                    Rating = 8.3m
+                    Rating = 8.3m,
+                    IsActive = true
                 },
 
                 new ()
@@ -130,7 +133,8 @@ public class Seed
                     Director = "James Gunn",
                     Language = "English",
                     Duration = "2 hours, 1 minute",
-                    Rating = 8.0m
+                    Rating = 8.0m,
+                    IsActive = true
                 },
 
                 new ()
@@ -143,7 +147,8 @@ public class Seed
                     Director = "Ryan Coogler",
                     Language = "English",
                     Duration = "2 hours, 14 minutes",
-                    Rating = 7.3m
+                    Rating = 7.3m,
+                    IsActive = true
                 },
 
                 new ()
@@ -156,7 +161,8 @@ public class Seed
                     Director = "Christopher Nolan",
                     Language = "English",
                     Duration = "2 hours, 28 minutes",
-                    Rating = 8.8m
+                    Rating = 8.8m,
+                    IsActive = false
                 },
 
                 new ()
@@ -169,7 +175,8 @@ public class Seed
                     Director = "Christopher Nolan",
                     Language = "English",
                     Duration = "2 hours, 49 minutes",
-                    Rating = 8.6m
+                    Rating = 8.6m,
+                    IsActive = false
                 },
 
                 new ()
@@ -182,7 +189,8 @@ public class Seed
                     Director = "Ridley Scott",
                     Language = "English",
                     Duration = "2 hours, 24 minutes",
-                    Rating = 8.0m
+                    Rating = 8.0m,
+                    IsActive = false
                 },
 
                 new ()
@@ -195,7 +203,8 @@ public class Seed
                     Director = "Robert Zemeckis",
                     Language = "English",
                     Duration = "2 hours, 22 minutes",
-                    Rating = 8.8m
+                    Rating = 8.8m,
+                    IsActive = false
                 },
 
                 new ()
@@ -208,7 +217,8 @@ public class Seed
                     Director = "Frank Darabont",
                     Language = "English",
                     Duration = "2 hours, 22 minutes",
-                    Rating = 9.3m
+                    Rating = 9.3m,
+                    IsActive = false
                 }
 
             ];

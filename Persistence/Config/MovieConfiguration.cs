@@ -8,6 +8,8 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
 {
     public void Configure(EntityTypeBuilder<Movie> builder)
     {
+        builder.HasQueryFilter(m => m.IsActive);
+
         builder.Property(m => m.Title).IsRequired();
 
         builder.Property(m => m.Genre).IsRequired();

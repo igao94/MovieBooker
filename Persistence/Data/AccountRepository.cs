@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Common.Constants;
+using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -35,5 +36,10 @@ public class AccountRepository(UserManager<User> userManager) : IAccountReposito
     public async Task<bool> CheckPasswordAsync(User user, string password)
     {
         return await userManager.CheckPasswordAsync(user, password);
+    }
+
+    public async Task<bool> IsUserAdmin(User user)
+    {
+        return await userManager.IsInRoleAsync(user, UserRoles.Admin);
     }
 }

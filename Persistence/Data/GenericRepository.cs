@@ -17,15 +17,6 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
 
     public void Remove(T entity) => _context.Remove(entity);
 
-    public void Update(T entity)
-    {
-        _context.Attach(entity);
-
-        context.Entry(entity).State = EntityState.Modified;
-    }
-
-    public async Task<bool> ExsistsAsync(string id) => await _context.AnyAsync(x => x.Id == id);
-
     public async Task<T?> GetByCompositeKeyAsync(string id, string secondId)
     {
         return await _context.FindAsync(id, secondId);

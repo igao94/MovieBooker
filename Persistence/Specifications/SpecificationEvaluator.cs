@@ -29,6 +29,8 @@ public class SpecificationEvaluator<T> where T : BaseEntity
 
         query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
 
+        if (spec.IgnoreGlobalQueryFilter) query = query.IgnoreQueryFilters();
+
         return query;
     }
 }
