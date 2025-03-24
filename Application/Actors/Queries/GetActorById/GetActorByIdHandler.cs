@@ -5,7 +5,7 @@ using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
 
-namespace Application.Actors.Queries;
+namespace Application.Actors.Queries.GetActorById;
 
 public class GetActorByIdHandler(IUnitOfWork unitOfWork,
     IMapper mapper) : IRequestHandler<GetActorByIdQuery, Result<ActorDto>>

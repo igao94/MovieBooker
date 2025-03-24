@@ -2,7 +2,7 @@
 using Application.Core;
 using MediatR;
 
-namespace Application.Actors.Queries;
+namespace Application.Actors.Queries.GetActorById;
 
 public class GetActorByIdQuery(string id) : IRequest<Result<ActorDto>>
 {
