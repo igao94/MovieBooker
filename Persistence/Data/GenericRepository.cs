@@ -45,4 +45,9 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
     {
         return SpecificationEvaluator<T>.GetQuery(_context, spec);
     }
+
+    public void DeleteRange(ICollection<T> entities)
+    {
+        _context.RemoveRange(entities);
+    }
 }

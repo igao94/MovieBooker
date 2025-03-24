@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
+using Persistence.Specifications.MoviesSpecification;
 
 namespace Application.Movies.Commands.DeleteMovie;
 
@@ -9,9 +10,13 @@ public class DeleteMovieHandler(IUnitOfWork unitOfWork) : IRequestHandler<Delete
 {
     public async Task<Result<Unit>> Handle(DeleteMovieCommand request, CancellationToken cancellationToken)
     {
-        var movie = await unitOfWork.Repository<Movie>().GetByIdAsync(request.Id);
+        var spec = new MovieSpecification(request.Id);
+
+        var movie = await unitOfWork.Repository<Movie>().GetEntityWithSpecAsync(spec);
 
         if (movie is null) return Result<Unit>.Failure("Movie not found.", 404);
+
+        unitOfWork.Repository<MovieActor>().DeleteRange(movie.Actors);
 
         unitOfWork.Repository<Movie>().Remove(movie);
 

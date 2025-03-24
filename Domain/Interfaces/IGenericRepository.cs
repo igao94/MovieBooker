@@ -13,4 +13,5 @@ public interface IGenericRepository<T> where T : BaseEntity
     void Remove(T entity);
     void Update(T entity);
     Task<bool> ExsistsAsync(string id);
+    void DeleteRange(ICollection<T> entities);
 }
