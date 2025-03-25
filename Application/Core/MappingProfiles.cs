@@ -20,6 +20,8 @@ public class MappingProfiles : Profile
 
         CreateMap<Actor, ActorDto>();
 
+        CreateMap<UpdateActorDto, Actor>();
+
         CreateMap<MovieActor, ActorDto>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ActorId))
             .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Actor.FullName))

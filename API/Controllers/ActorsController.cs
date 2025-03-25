@@ -1,6 +1,7 @@
 ﻿using Application.Actors.Commands.AddActorToMovie;
 using Application.Actors.Commands.CreateActor;
 using Application.Actors.Commands.DeleteActor;
+using Application.Actors.Commands.UpdateActor;
 using Application.Actors.DTOs;
 using Application.Actors.Queries.GetActorById;
 using Application.Actors.Queries.GetAllActors;
@@ -46,5 +47,14 @@ public class ActorsController : BaseApiController
     public async Task<ActionResult> DeleteActor(string id)
     {
         return HandleResult(await Mediator.Send(new DeleteActorCommand(id)));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpPut("{id}")]
+    public async Task<ActionResult> DeleteActor(string id, UpdateActorDto updateActorDto)
+    {
+        updateActorDto.Id = id;
+
+        return HandleResult(await Mediator.Send(new UpdateActorCommand(updateActorDto)));
     }
 }

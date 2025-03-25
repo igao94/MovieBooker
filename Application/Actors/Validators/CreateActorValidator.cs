@@ -1,13 +1,12 @@
 ﻿using Application.Actors.Commands.CreateActor;
-using FluentValidation;
+using Application.Actors.DTOs;
 
 namespace Application.Actors.Validators;
 
-public class CreateActorValidator : AbstractValidator<CreateActorCommand>
+public class CreateActorValidator : BaseActorValidator<CreateActorCommand, CreateActorDto>
 {
-    public CreateActorValidator()
+    public CreateActorValidator() : base(a => a.CreateActorDto)
     {
-        RuleFor(a => a.CreateActorDto.FullName)
-            .NotEmpty().WithMessage("FullName is required."); ;
+
     }
 }
