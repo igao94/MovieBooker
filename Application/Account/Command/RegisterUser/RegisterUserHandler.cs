@@ -11,7 +11,8 @@ namespace Application.Account.Command.RegisterUser;
 public class RegisterUserHandler(IUnitOfWork unitOfWork,
     ITokenService tokenService) : IRequestHandler<RegisterUserCommand, Result<AccountDto>>
 {
-    public async Task<Result<AccountDto>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AccountDto>> Handle(RegisterUserCommand request, 
+        CancellationToken cancellationToken)
     {
         if (await unitOfWork.AccountRepository.EmailExistsAsync(request.RegisterDto.Email))
             return Result<AccountDto>.Failure("Email is already taken.", 400);

@@ -2,5 +2,5 @@
 
 public class CreateShowtimeDto : BaseShowtimeDto
 {
-
+    public string MovieId { get; set; } = string.Empty;
 }

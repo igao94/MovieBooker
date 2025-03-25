@@ -1,22 +1,14 @@
 ﻿using Application.Showtimes.Commands.AddShowtime;
+using Application.Showtimes.DTOs;
 using FluentValidation;
 
 namespace Application.Showtimes.Validators;
 
-public class CreateShowtimeValidator : AbstractValidator<AddShowtimeCommand>
+public class CreateShowtimeValidator : BaseShowtimeValidator<AddShowtimeCommand, CreateShowtimeDto>
 {
-    public CreateShowtimeValidator()
+    public CreateShowtimeValidator() : base(st => st.CreateShowtimeDto)
     {
         RuleFor(st => st.CreateShowtimeDto.MovieId)
             .NotEmpty().WithMessage("Movie id is required.");
-
-        RuleFor(st => st.CreateShowtimeDto.AvailableSeats)
-            .NotEmpty().WithMessage("Seats are required.");
-
-        RuleFor(st => st.CreateShowtimeDto.StartTime)
-            .Must(startTime => startTime > DateTime.UtcNow)
-                .WithMessage("Start time must be in the future.")
-            .Must(startTime => startTime.Kind == DateTimeKind.Utc)
-                .WithMessage("Start time must be in UTC format.");
     }
 }

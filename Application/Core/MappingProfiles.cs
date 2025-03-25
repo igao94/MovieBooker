@@ -28,5 +28,7 @@ public class MappingProfiles : Profile
             .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => src.Actor.PictureUrl));
 
         CreateMap<Showtime, ShowtimeDto>();
+
+        CreateMap<UpdateShowtimeDto, Showtime>();
     }
 }
