@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Config;
 
-public class ShowTimeConfiguration : IEntityTypeConfiguration<ShowTime>
+public class ShowtimeConfiguration : IEntityTypeConfiguration<Showtime>
 {
-    public void Configure(EntityTypeBuilder<ShowTime> builder)
+    public void Configure(EntityTypeBuilder<Showtime> builder)
     {
         builder.HasQueryFilter(st => st.Movie.IsActive);
 
         builder.HasQueryFilter(st => st.StartTime > DateTime.UtcNow);
 
         builder.HasOne(st => st.Movie)
-            .WithMany(m => m.Shows)
+            .WithMany(m => m.ShowTimes)
             .HasForeignKey(m => m.MovieId)
             .OnDelete(DeleteBehavior.Cascade);
     }

@@ -12,8 +12,8 @@ using Persistence.Data;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250324152342_ShowTimeEntityAdded")]
-    partial class ShowTimeEntityAdded
+    [Migration("20250325105618_ShowtimeEntityAdded")]
+    partial class ShowtimeEntityAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
@@ -50,7 +50,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -108,13 +108,16 @@ namespace Persistence.Migrations
                     b.ToTable("MovieActor");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ShowTime", b =>
+            modelBuilder.Entity("Domain.Entities.Showtime", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AvailableSeats")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("MovieId")
                         .IsRequired()
@@ -127,7 +130,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Shows");
+                    b.ToTable("Showtimes");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -361,10 +364,10 @@ namespace Persistence.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ShowTime", b =>
+            modelBuilder.Entity("Domain.Entities.Showtime", b =>
                 {
                     b.HasOne("Domain.Entities.Movie", "Movie")
-                        .WithMany("Shows")
+                        .WithMany("ShowTimes")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -432,7 +435,7 @@ namespace Persistence.Migrations
                 {
                     b.Navigation("Actors");
 
-                    b.Navigation("Shows");
+                    b.Navigation("ShowTimes");
                 });
 #pragma warning restore 612, 618
         }

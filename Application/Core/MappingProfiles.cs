@@ -1,5 +1,6 @@
 ﻿using Application.Actors.DTOs;
 using Application.Movies.DTOs;
+using Application.Showtimes.DTOs;
 using AutoMapper;
 using Domain.Entities;
 
@@ -23,5 +24,7 @@ public class MappingProfiles : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ActorId))
             .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Actor.FullName))
             .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => src.Actor.PictureUrl));
+
+        CreateMap<Showtime, ShowtimeDto>();
     }
 }

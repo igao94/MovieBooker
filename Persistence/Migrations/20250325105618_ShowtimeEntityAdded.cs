@@ -6,11 +6,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class ShowTimeEntityAdded : Migration
+    public partial class ShowtimeEntityAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "CreatedAt",
+                table: "Movies",
+                newName: "CreationDate");
+
+            migrationBuilder.RenameColumn(
+                name: "CreatedAt",
+                table: "Actors",
+                newName: "CreationDate");
+
             migrationBuilder.AddColumn<bool>(
                 name: "IsActive",
                 table: "Movies",
@@ -19,19 +29,20 @@ namespace Persistence.Migrations
                 defaultValue: false);
 
             migrationBuilder.CreateTable(
-                name: "Shows",
+                name: "Showtimes",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MovieId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AvailableSeats = table.Column<int>(type: "int", nullable: false)
+                    AvailableSeats = table.Column<int>(type: "int", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shows", x => x.Id);
+                    table.PrimaryKey("PK_Showtimes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Shows_Movies_MovieId",
+                        name: "FK_Showtimes_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
@@ -39,8 +50,8 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Shows_MovieId",
-                table: "Shows",
+                name: "IX_Showtimes_MovieId",
+                table: "Showtimes",
                 column: "MovieId");
         }
 
@@ -48,11 +59,21 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Shows");
+                name: "Showtimes");
 
             migrationBuilder.DropColumn(
                 name: "IsActive",
                 table: "Movies");
+
+            migrationBuilder.RenameColumn(
+                name: "CreationDate",
+                table: "Movies",
+                newName: "CreatedAt");
+
+            migrationBuilder.RenameColumn(
+                name: "CreationDate",
+                table: "Actors",
+                newName: "CreatedAt");
         }
     }
 }

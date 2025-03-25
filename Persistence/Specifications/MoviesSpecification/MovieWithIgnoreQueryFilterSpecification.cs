@@ -8,6 +8,8 @@ public class MovieWithIgnoreQueryFilterSpecification : BaseSpecification<Movie>
     {
         ApplyIgnoreGlobalQueryFilter();
 
+        AddInclude(m => m.ShowTimes);
+
         AddInclude("Actors.Actor");
     }
 
@@ -18,6 +20,8 @@ public class MovieWithIgnoreQueryFilterSpecification : BaseSpecification<Movie>
             .Any(actor => a.Actor.FullName.Contains(actor.Trim())))))
     {
         ApplyIgnoreGlobalQueryFilter();
+
+        AddInclude(m => m.ShowTimes);
 
         AddInclude("Actors.Actor");
 

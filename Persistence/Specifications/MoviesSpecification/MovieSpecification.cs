@@ -6,6 +6,8 @@ public class MovieSpecification : BaseSpecification<Movie>
 {
     public MovieSpecification(string id) : base(m => m.Id == id)
     {
+        AddInclude(m => m.ShowTimes);
+
         AddInclude("Actors.Actor");
     }
 
@@ -15,6 +17,8 @@ public class MovieSpecification : BaseSpecification<Movie>
         (!specParams.Actors.Any() || m.Actors.Any(a => specParams.Actors
             .Any(actor => a.Actor.FullName.Contains(actor.Trim())))))
     {
+        AddInclude(m => m.ShowTimes);
+
         AddInclude("Actors.Actor");
 
         switch (specParams.Sort)
