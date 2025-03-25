@@ -51,7 +51,7 @@ public class ActorsController : BaseApiController
 
     [Authorize(Policy = PolicyTypes.RequireAdminRole)]
     [HttpPut("{id}")]
-    public async Task<ActionResult> DeleteActor(string id, UpdateActorDto updateActorDto)
+    public async Task<ActionResult> UpdateActor(string id, UpdateActorDto updateActorDto)
     {
         updateActorDto.Id = id;
 

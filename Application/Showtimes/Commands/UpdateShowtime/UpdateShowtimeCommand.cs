@@ -6,5 +6,5 @@ namespace Application.Showtimes.Commands.UpdateShowtime;
 
 public class UpdateShowtimeCommand(UpdateShowtimeDto updateShowtimeDto) : IRequest<Result<Unit>>
 {
-    public UpdateShowtimeDto UpdateShowtime { get; set; } = updateShowtimeDto;
+    public UpdateShowtimeDto UpdateShowtimeDto { get; set; } = updateShowtimeDto;
 }

@@ -5,7 +5,7 @@ namespace Application.Showtimes.Validators;
 
 public class UpdateShowtimeValidator : BaseShowtimeValidator<UpdateShowtimeCommand, UpdateShowtimeDto>
 {
-    public UpdateShowtimeValidator() : base(a => a.UpdateShowtime)
+    public UpdateShowtimeValidator() : base(a => a.UpdateShowtimeDto)
     {
 
     }
