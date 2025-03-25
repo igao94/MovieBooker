@@ -15,6 +15,11 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
 
     public async Task<T?> GetByIdAsync(string id) => await _context.FindAsync(id);
 
+    public async Task<T?> GetByIdWithIgnoreFilterAsync(string id)
+    {
+        return await _context.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public void Remove(T entity) => _context.Remove(entity);
 
     public async Task<T?> GetByCompositeKeyAsync(string id, string secondId)

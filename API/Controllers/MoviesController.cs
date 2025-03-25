@@ -1,5 +1,6 @@
 ﻿using Application.Movies.Commands.AddMovie;
 using Application.Movies.Commands.DeleteMovie;
+using Application.Movies.Commands.ToggleActiveMovie;
 using Application.Movies.Commands.UpdateMovie;
 using Application.Movies.DTOs;
 using Application.Movies.Queries.GetAllMovies;
@@ -48,5 +49,12 @@ public class MoviesController : BaseApiController
     public async Task<ActionResult> DeleteMovie(string id)
     {
         return HandleResult(await Mediator.Send(new DeleteMovieCommand(id)));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpPost("toggle-active-movie/{id}")]
+    public async Task<ActionResult> ToggleActiveMovie(string id)
+    {
+        return HandleResult(await Mediator.Send(new ToggleActiveMovieCommand(id)));
     }
 }
