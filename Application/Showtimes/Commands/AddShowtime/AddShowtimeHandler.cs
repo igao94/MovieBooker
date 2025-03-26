@@ -17,6 +17,8 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
 
         if (movie is null) return Result<ShowtimeDto>.Failure("Movie not found.", 404);
 
+        if (!movie.IsActive) return Result<ShowtimeDto>.Failure("Movie not active.", 400);
+
         var showTime = new Showtime
         {
             MovieId = movie.Id,
