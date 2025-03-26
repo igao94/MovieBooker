@@ -1,7 +1,7 @@
 ﻿using Application.Showtimes.Commands.AddShowtime;
 using Application.Showtimes.Commands.DeleteShowtime;
 using Application.Showtimes.Commands.UpdateShowtime;
-using Application.Showtimes.DTOs;
+using Application.Showtimes.ShowtimeDTOs;
 using Domain.Common.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

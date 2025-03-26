@@ -14,5 +14,5 @@ public class Movie : BaseEntity
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
     public bool IsActive { get; set; } = true;
     public ICollection<MovieActor> Actors { get; set; } = [];
-    public ICollection<Showtime> ShowTimes { get; set; } = [];
+    public ICollection<Showtime> Showtimes { get; set; } = [];
 }

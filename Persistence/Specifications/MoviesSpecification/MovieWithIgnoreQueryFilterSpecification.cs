@@ -8,7 +8,7 @@ public class MovieWithIgnoreQueryFilterSpecification : BaseSpecification<Movie>
     {
         ApplyIgnoreGlobalQueryFilter();
 
-        AddInclude(m => m.ShowTimes);
+        AddInclude("Showtimes.ShowtimeSeats");
 
         AddInclude("Actors.Actor");
     }
@@ -21,7 +21,7 @@ public class MovieWithIgnoreQueryFilterSpecification : BaseSpecification<Movie>
     {
         ApplyIgnoreGlobalQueryFilter();
 
-        AddInclude(m => m.ShowTimes);
+        AddInclude("Showtimes.ShowtimeSeats");
 
         AddInclude("Actors.Actor");
 

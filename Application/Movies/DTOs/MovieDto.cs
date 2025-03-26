@@ -1,5 +1,5 @@
 ﻿using Application.Actors.DTOs;
-using Application.Showtimes.DTOs;
+using Application.Showtimes.ShowtimeDTOs;
 
 namespace Application.Movies.DTOs;
 

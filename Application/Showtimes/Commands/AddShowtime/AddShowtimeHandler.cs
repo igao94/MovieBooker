@@ -1,5 +1,5 @@
 ﻿using Application.Core;
-using Application.Showtimes.DTOs;
+using Application.Showtimes.ShowtimeDTOs;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
@@ -20,11 +20,21 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
         var showTime = new Showtime
         {
             MovieId = movie.Id,
-            StartTime = request.CreateShowtimeDto.StartTime,
-            AvailableSeats = request.CreateShowtimeDto.AvailableSeats
+            StartTime = request.CreateShowtimeDto.StartTime
         };
 
         unitOfWork.Repository<Showtime>().Add(showTime);
+
+        var seats = Enumerable.Range(1, request.CreateShowtimeDto.AvailableSeats)
+            .Select(seatNumber => new ShowtimeSeat
+            {
+                ShowtimeId = showTime.Id,
+                SeatNumber = seatNumber,
+                IsReserved = false
+            })
+            .ToList();
+
+        unitOfWork.Repository<ShowtimeSeat>().AddRange(seats);
 
         var result = await unitOfWork.CompleteAsync();
 

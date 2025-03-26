@@ -13,4 +13,5 @@ public interface IGenericRepository<T> where T : BaseEntity
     void Add(T entity);
     void Remove(T entity);
     void DeleteRange(ICollection<T> entities);
+    void AddRange(ICollection<T> entities);
 }

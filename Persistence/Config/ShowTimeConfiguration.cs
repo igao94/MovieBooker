@@ -13,7 +13,7 @@ public class ShowtimeConfiguration : IEntityTypeConfiguration<Showtime>
         builder.HasQueryFilter(st => st.StartTime > DateTime.UtcNow);
 
         builder.HasOne(st => st.Movie)
-            .WithMany(m => m.ShowTimes)
+            .WithMany(m => m.Showtimes)
             .HasForeignKey(m => m.MovieId)
             .OnDelete(DeleteBehavior.Cascade);
     }

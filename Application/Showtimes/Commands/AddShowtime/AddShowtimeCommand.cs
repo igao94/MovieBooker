@@ -1,5 +1,5 @@
 ﻿using Application.Core;
-using Application.Showtimes.DTOs;
+using Application.Showtimes.ShowtimeDTOs;
 using MediatR;
 
 namespace Application.Showtimes.Commands.AddShowtime;
