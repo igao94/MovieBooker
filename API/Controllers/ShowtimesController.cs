@@ -1,5 +1,6 @@
 ﻿using Application.Showtimes.Commands.AddShowtime;
 using Application.Showtimes.Commands.DeleteShowtime;
+using Application.Showtimes.Commands.ReserveSeat;
 using Application.Showtimes.Commands.UpdateShowtime;
 using Application.Showtimes.ShowtimeDTOs;
 using Domain.Common.Constants;
@@ -31,5 +32,11 @@ public class ShowtimesController : BaseApiController
     public async Task<ActionResult> DeleteShowtime(string id)
     {
         return HandleResult(await Mediator.Send(new DeleteShowtimeCommand(id)));
+    }
+
+    [HttpPut("reserve-seat/{showtimeId}/{seatNumber}")]
+    public async Task<ActionResult> ReserveSeat(string showtimeId, int seatNumber)
+    {
+        return HandleResult(await Mediator.Send(new ReserveSeatCommand(showtimeId, seatNumber)));
     }
 }
