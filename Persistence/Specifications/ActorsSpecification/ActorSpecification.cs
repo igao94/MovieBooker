@@ -6,7 +6,7 @@ public class ActorSpecification : BaseSpecification<Actor>
 {
     public ActorSpecification(string id) : base(a => a.Id == id)
     {
-        AddInclude(a => a.Movies);
+        
     }
 
     public ActorSpecification(ActorSpecParams specParams) : base(a =>

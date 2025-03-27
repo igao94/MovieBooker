@@ -19,10 +19,15 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
 
         if (!movie.IsActive) return Result<ShowtimeDto>.Failure("Movie not active.", 400);
 
+        var startTime = request.CreateShowtimeDto.StartTime;
+
+        var endTime = startTime.AddDays(6);
+
         var showTime = new Showtime
         {
             MovieId = movie.Id,
-            StartTime = request.CreateShowtimeDto.StartTime
+            StartTime = startTime,
+            EndTime = endTime
         };
 
         unitOfWork.Repository<Showtime>().Add(showTime);

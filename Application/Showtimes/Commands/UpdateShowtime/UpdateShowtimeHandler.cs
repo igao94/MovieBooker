@@ -20,6 +20,8 @@ public class UpdateShowtimeHandler(IUnitOfWork unitOfWork,
 
         mapper.Map(request.UpdateShowtimeDto, showtime);
 
+        showtime.EndTime = showtime.StartTime.AddDays(6);
+
         var result = await unitOfWork.CompleteAsync();
 
         return result

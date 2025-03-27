@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using System.Linq.Expressions;
 
 namespace Persistence.Specifications;

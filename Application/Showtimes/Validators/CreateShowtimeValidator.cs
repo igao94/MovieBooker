@@ -14,7 +14,7 @@ public class CreateShowtimeValidator : AbstractValidator<AddShowtimeCommand>
             .Must(startTime => startTime > DateTime.UtcNow)
                 .WithMessage("Start time must be in the future.")
             .Must(startTime => startTime.Kind == DateTimeKind.Utc)
-                .WithMessage("Start time must be in UTC format.");
+                .WithMessage("Start time must be in UTC format.");        
 
         RuleFor(st => st.CreateShowtimeDto.AvailableSeats)
             .NotEmpty().WithMessage("Seats are required.");
