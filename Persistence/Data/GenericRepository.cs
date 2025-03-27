@@ -30,19 +30,34 @@ public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> 
     public async Task<T?> GetEntityWithSpecAsync(ISpecification<T> spec)
     {
         return await ApplySpecification(spec).FirstOrDefaultAsync();
+    }    
+    
+    public async Task<TResult?> GetEntityWithSpecAsync<TResult>(ISpecification<T, TResult> spec)
+    {
+        return await ApplySpecification(spec).FirstOrDefaultAsync();
     }
 
     public async Task<IReadOnlyList<T>> GetEntitiesWithSpecAsync(ISpecification<T> spec)
     {
         return await ApplySpecification(spec).ToListAsync();
-    }
-
-    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+    }    
+    
+    public async Task<IReadOnlyList<TResult>> GetEntitiesWithSpecAsync<TResult>(ISpecification<T, TResult> spec)
     {
-        return SpecificationEvaluator<T>.GetQuery(_context, spec);
+        return await ApplySpecification(spec).ToListAsync();
     }
 
     public void DeleteRange(ICollection<T> entities) => _context.RemoveRange(entities);
 
     public void AddRange(ICollection<T> entities) => _context.AddRange(entities);
+
+    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+    {
+        return SpecificationEvaluator<T>.GetQuery(_context, spec);
+    }    
+    
+    private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> spec)
+    {
+        return SpecificationEvaluator<T>.GetQuery(_context, spec);
+    }
 }

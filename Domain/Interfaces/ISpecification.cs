@@ -11,3 +11,8 @@ public interface ISpecification<T>
     List<string> IncludeStrings { get; }
     bool IgnoreGlobalQueryFilter { get; }
 }
+
+public interface ISpecification<T, TResult> : ISpecification<T>
+{
+    Expression<Func<T, TResult>>? Select { get; }
+}

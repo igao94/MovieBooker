@@ -9,6 +9,8 @@ public interface IGenericRepository<T> where T : BaseEntity
     Task<T?> GetByCompositeKeyAsync(string id, string secondId);
     Task<T?> GetEntityWithSpecAsync(ISpecification<T> spec);
     Task<IReadOnlyList<T>> GetEntitiesWithSpecAsync(ISpecification<T> spec);
+    Task<TResult?> GetEntityWithSpecAsync<TResult>(ISpecification<T, TResult> spec);
+    Task<IReadOnlyList<TResult>> GetEntitiesWithSpecAsync<TResult>(ISpecification<T, TResult> spec);
     Task<IReadOnlyList<T>> GetAllAsync();
     void Add(T entity);
     void Remove(T entity);

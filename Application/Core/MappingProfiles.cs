@@ -1,7 +1,6 @@
 ﻿using Application.Actors.DTOs;
 using Application.Movies.DTOs;
 using Application.Showtimes.ShowtimeDTOs;
-using Application.Showtimes.ShowtimeSeatDTOs;
 using AutoMapper;
 using Domain.Entities;
 
@@ -34,7 +33,5 @@ public class MappingProfiles : Profile
                 .Count(ss => !ss.IsReserved)));
 
         CreateMap<UpdateShowtimeDto, Showtime>();
-
-        CreateMap<ShowtimeSeat, ShowtimeSeatDto>();
     }
 }

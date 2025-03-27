@@ -4,7 +4,6 @@ using Application.Showtimes.Commands.ReserveSeat;
 using Application.Showtimes.Commands.UpdateShowtime;
 using Application.Showtimes.Queries;
 using Application.Showtimes.ShowtimeDTOs;
-using Application.Showtimes.ShowtimeSeatDTOs;
 using Domain.Common.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +42,7 @@ public class ShowtimesController : BaseApiController
     }
 
     [HttpGet("available-seats/{showtimeId}")]
-    public async Task<ActionResult<IReadOnlyList<ShowtimeSeatDto>>> GetAvaiableSeats(string showtimeId)
+    public async Task<ActionResult<IReadOnlyList<int>>> GetAvaiableSeats(string showtimeId)
     {
         return HandleResult(await Mediator.Send(new GetAvailableSeatsQuery(showtimeId)));
     }

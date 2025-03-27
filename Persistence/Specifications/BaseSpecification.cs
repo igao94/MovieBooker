@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities;
+using Domain.Interfaces;
 using System.Linq.Expressions;
 
 namespace Persistence.Specifications;
@@ -38,4 +39,15 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     }
 
     protected void ApplyIgnoreGlobalQueryFilter() => IgnoreGlobalQueryFilter = true;
+}
+
+public class BaseSpecification<T, TResult>(Expression<Func<T, bool>>? criteria)
+    : BaseSpecification<T>(criteria), ISpecification<T, TResult>
+{
+    public Expression<Func<T, TResult>>? Select { get; private set; }
+
+    protected void AddSelect(Expression<Func<T, TResult>> selectExpression)
+    {
+        Select = selectExpression;
+    }
 }
