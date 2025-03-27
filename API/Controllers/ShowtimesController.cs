@@ -35,10 +35,10 @@ public class ShowtimesController : BaseApiController
         return HandleResult(await Mediator.Send(new DeleteShowtimeCommand(id)));
     }
 
-    [HttpPut("reserve-seat/{showtimeId}/{seatNumber}")]
-    public async Task<ActionResult> ReserveSeat(string showtimeId, int seatNumber)
+    [HttpPut("reserve-seat")]
+    public async Task<ActionResult> ReserveSeat(ReserveSeatCommand command)
     {
-        return HandleResult(await Mediator.Send(new ReserveSeatCommand(showtimeId, seatNumber)));
+        return HandleResult(await Mediator.Send(command));
     }
 
     [HttpGet("available-seats/{showtimeId}")]
