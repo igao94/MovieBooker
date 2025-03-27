@@ -10,8 +10,6 @@ public class ShowtimeConfiguration : IEntityTypeConfiguration<Showtime>
     {
         builder.HasQueryFilter(st => st.Movie.IsActive);
 
-        builder.HasQueryFilter(st => st.StartTime > DateTime.UtcNow);
-
         builder.HasOne(st => st.Movie)
             .WithMany(m => m.Showtimes)
             .HasForeignKey(m => m.MovieId)

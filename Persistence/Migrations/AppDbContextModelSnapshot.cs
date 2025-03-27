@@ -39,7 +39,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Movie", b =>
@@ -87,7 +87,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.MovieActor", b =>
@@ -102,7 +102,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("MovieActor");
+                    b.ToTable("MovieActor", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Showtime", b =>
@@ -124,7 +124,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Showtimes");
+                    b.ToTable("Showtimes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ShowtimeSeat", b =>
@@ -152,7 +152,7 @@ namespace Persistence.Migrations
                     b.HasIndex("ShowtimeId", "SeatNumber")
                         .IsUnique();
 
-                    b.ToTable("ShowtimeSeats");
+                    b.ToTable("ShowtimeSeats", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
