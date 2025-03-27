@@ -21,10 +21,6 @@ public class MovieWithIgnoreQueryFilterSpecification : BaseSpecification<Movie>
     {
         ApplyIgnoreGlobalQueryFilter();
 
-        AddInclude("Showtimes.ShowtimeSeats");
-
-        AddInclude("Actors.Actor");
-
         switch (specParams.Sort)
         {
             case "moviesAsc":

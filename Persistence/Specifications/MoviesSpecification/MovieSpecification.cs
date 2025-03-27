@@ -17,10 +17,6 @@ public class MovieSpecification : BaseSpecification<Movie>
         (!specParams.Actors.Any() || m.Actors.Any(a => specParams.Actors
             .Any(actor => a.Actor.FullName.Contains(actor.Trim())))))
     {
-        AddInclude("Actors.Actor");
-
-        AddInclude("Showtimes.ShowtimeSeats");
-
         switch (specParams.Sort)
         {
             case "moviesAsc":
