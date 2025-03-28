@@ -14,6 +14,10 @@ public class ReserveSeatHandler(IUnitOfWork unitOfWork,
     {
         var userId = userAccessor.GetUserId();
 
+        var seat = await unitOfWork.Repository<ShowtimeSeat>().GetByIdAsync(request.ShowtimeSeatId);
+
+        if (seat is null) return Result<Unit>.Failure("Seat not found.", 404);
+
         var showtime = await unitOfWork.Repository<Showtime>().GetByIdAsync(request.ShowtimeId);
 
         if (showtime is null) return Result<Unit>.Failure("Showtime not found.", 404);
@@ -24,7 +28,7 @@ public class ReserveSeatHandler(IUnitOfWork unitOfWork,
             return Result<Unit>.Failure($"Please choose valid time, movie starts at {showtimeStartTime}.", 400);
 
         if (request.Date < showtime.StartTime || request.Date > showtime.EndTime)
-            return Result<Unit>.Failure("Selected date is out of showtime range.", 400);
+            return Result<Unit>.Failure("Date is out of showtime range.", 400);
 
         var spec = new ShowtimeSeatReservationSpecification(request.ShowtimeSeatId, request.Date);
 

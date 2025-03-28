@@ -12,7 +12,7 @@ using Persistence.Data;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250328100300_ShowtimeSeatReservationEntityAdded")]
+    [Migration("20250328112218_ShowtimeSeatReservationEntityAdded")]
     partial class ShowtimeSeatReservationEntityAdded
     {
         /// <inheritdoc />

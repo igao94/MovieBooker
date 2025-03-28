@@ -2,7 +2,7 @@
 
 namespace Persistence.Specifications.ShowtimeSeatsSpecification;
 
-public class ShowtimeSeatNumberSpecification : BaseSpecification<ShowtimeSeat, int>
+public class ShowtimeSeatNumberSpecification : BaseSpecification<ShowtimeSeat>
 {
     public ShowtimeSeatNumberSpecification(string showtimeId)
         : base(ss => ss.ShowtimeId == showtimeId)
