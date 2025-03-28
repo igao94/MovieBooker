@@ -32,7 +32,5 @@ public class MappingProfiles : Profile
             .ForMember(dest => dest.Movie, opt => opt.MapFrom(src => src.Movie.Title));
 
         CreateMap<UpdateShowtimeDto, Showtime>();
-
-        CreateMap<ShowtimeSeat, SeatDto>();
     }
 }

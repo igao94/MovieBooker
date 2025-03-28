@@ -42,9 +42,9 @@ public class ShowtimesController : BaseApiController
         return HandleResult(await Mediator.Send(command));
     }
 
-    [HttpGet("available-seats/{showtimeId}")]
-    public async Task<ActionResult<IReadOnlyList<SeatDto>>> GetAvaiableSeats(string showtimeId)
+    [HttpGet("available-seats")]
+    public async Task<ActionResult<IReadOnlyList<SeatDto>>> GetAvaiableSeats(GetAvailableSeatsQuery query)
     {
-        return HandleResult(await Mediator.Send(new GetAvailableSeatsQuery(showtimeId)));
+        return HandleResult(await Mediator.Send(query));
     }
 }
