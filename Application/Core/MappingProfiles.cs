@@ -1,7 +1,6 @@
 ﻿using Application.Actors.DTOs;
 using Application.Movies.DTOs;
 using Application.Showtimes.ShowtimeDTOs;
-using Application.Showtimes.ShowtimeSeatDTOs;
 using AutoMapper;
 using Domain.Entities;
 
@@ -30,7 +29,5 @@ public class MappingProfiles : Profile
 
         CreateMap<Showtime, ShowtimeDto>()
             .ForMember(dest => dest.Movie, opt => opt.MapFrom(src => src.Movie.Title));
-
-        CreateMap<UpdateShowtimeDto, Showtime>();
     }
 }

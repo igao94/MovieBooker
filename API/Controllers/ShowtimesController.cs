@@ -1,8 +1,8 @@
 ﻿using Application.Showtimes.Commands.AddShowtime;
 using Application.Showtimes.Commands.DeleteShowtime;
 using Application.Showtimes.Commands.ReserveSeat;
-using Application.Showtimes.Commands.UpdateShowtime;
-using Application.Showtimes.Queries;
+using Application.Showtimes.Queries.GetAvailableSeats;
+using Application.Showtimes.Queries.GetShowtimeById;
 using Application.Showtimes.ShowtimeDTOs;
 using Application.Showtimes.ShowtimeSeatDTOs;
 using Domain.Common.Constants;
@@ -13,20 +13,21 @@ namespace API.Controllers;
 
 public class ShowtimesController : BaseApiController
 {
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ShowtimeDto>> GetShowtimeById(string id)
+    {
+        return HandleResult(await Mediator.Send(new GetShowtimeByIdQuery(id)));
+    }
+
     [Authorize(Policy = PolicyTypes.RequireAdminRole)]
     [HttpPost]
     public async Task<ActionResult<ShowtimeDto>> AddShowtime(CreateShowtimeDto createShowTimeDto)
     {
-        return HandleResult(await Mediator.Send(new AddShowtimeCommand(createShowTimeDto)));
-    }
+        var result = await Mediator.Send(new AddShowtimeCommand(createShowTimeDto));
 
-    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
-    [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateShowtime(string id, UpdateShowtimeDto updateShowtimeDto)
-    {
-        updateShowtimeDto.Id = id;
-
-        return HandleResult(await Mediator.Send(new UpdateShowtimeCommand(updateShowtimeDto)));
+        return HandleCreatedResult<ShowtimeDto>(nameof(GetShowtimeById),
+            new { id = result.Value?.Id },
+            result.Value);
     }
 
     [Authorize(Policy = PolicyTypes.RequireAdminRole)]

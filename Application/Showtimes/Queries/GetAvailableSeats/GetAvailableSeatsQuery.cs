@@ -2,7 +2,7 @@
 using Application.Showtimes.ShowtimeSeatDTOs;
 using MediatR;
 
-namespace Application.Showtimes.Queries;
+namespace Application.Showtimes.Queries.GetAvailableSeats;
 
 public class GetAvailableSeatsQuery(string showtimeId, DateTime date) : IRequest<Result<IReadOnlyList<SeatDto>>>
 {

@@ -3,9 +3,10 @@ using Application.Showtimes.ShowtimeSeatDTOs;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
+using Persistence.Specifications.ShowtimeSeatReservationsSpecification;
 using Persistence.Specifications.ShowtimeSeatsSpecification;
 
-namespace Application.Showtimes.Queries;
+namespace Application.Showtimes.Queries.GetAvailableSeats;
 
 public class GetAvailableSeatsHandler(IUnitOfWork unitOfWork)
     : IRequestHandler<GetAvailableSeatsQuery, Result<IReadOnlyList<SeatDto>>>
@@ -30,7 +31,7 @@ public class GetAvailableSeatsHandler(IUnitOfWork unitOfWork)
 
         var seats = await unitOfWork.Repository<ShowtimeSeat>().GetEntitiesWithSpecAsync(spec);
 
-        var reservedSpec = new ShowtimeSeatReservationsSpecification(request.ShowtimeId, request.Date);
+        var reservedSpec = new ShowtimeSeatReservationSpecification(request.ShowtimeId, request.Date);
 
         var reservedSeats = await unitOfWork.Repository<ShowtimeSeatReservation>()
             .GetEntitiesWithSpecAsync(reservedSpec);

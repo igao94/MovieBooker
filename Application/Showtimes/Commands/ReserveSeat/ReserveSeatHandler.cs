@@ -30,7 +30,7 @@ public class ReserveSeatHandler(IUnitOfWork unitOfWork,
         if (request.Date < showtime.StartTime || request.Date > showtime.EndTime)
             return Result<Unit>.Failure("Date is out of showtime range.", 400);
 
-        var spec = new ShowtimeSeatReservationSpecification(request.ShowtimeSeatId, request.Date);
+        var spec = new SeatReservationBySeatIdSpecification(request.ShowtimeSeatId, request.Date);
 
         var seatReservation = await unitOfWork.Repository<ShowtimeSeatReservation>()
             .GetEntityWithSpecAsync(spec);
