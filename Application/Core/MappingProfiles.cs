@@ -1,6 +1,7 @@
 ﻿using Application.Actors.DTOs;
 using Application.Movies.DTOs;
 using Application.Showtimes.ShowtimeDTOs;
+using Application.Showtimes.ShowtimeSeatDTOs;
 using AutoMapper;
 using Domain.Entities;
 
@@ -28,10 +29,10 @@ public class MappingProfiles : Profile
             .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => src.Actor.PictureUrl));
 
         CreateMap<Showtime, ShowtimeDto>()
-            .ForMember(dest => dest.Movie, opt => opt.MapFrom(src => src.Movie.Title))
-            .ForMember(dest => dest.AvailableSeats, opt => opt.MapFrom(src => src.ShowtimeSeats
-                .Count(ss => !ss.IsReserved)));
+            .ForMember(dest => dest.Movie, opt => opt.MapFrom(src => src.Movie.Title));
 
         CreateMap<UpdateShowtimeDto, Showtime>();
+
+        CreateMap<ShowtimeSeat, SeatDto>();
     }
 }

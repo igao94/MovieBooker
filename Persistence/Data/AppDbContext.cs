@@ -12,6 +12,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     public DbSet<Actor> Actors { get; set; }
     public DbSet<Showtime> Showtimes { get; set; }
     public DbSet<ShowtimeSeat> ShowtimeSeats { get; set; }
+    public DbSet<ShowtimeSeatReservation> ShowtimeSeatReservations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

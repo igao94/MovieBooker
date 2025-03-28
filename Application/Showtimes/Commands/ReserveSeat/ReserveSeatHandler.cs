@@ -3,7 +3,7 @@ using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
-using Persistence.Specifications.ShowtimeSeatsSpecification;
+using Persistence.Specifications.ShowtimeSeatReservationsSpecification;
 
 namespace Application.Showtimes.Commands.ReserveSeat;
 
@@ -14,32 +14,35 @@ public class ReserveSeatHandler(IUnitOfWork unitOfWork,
     {
         var userId = userAccessor.GetUserId();
 
-        var spec = new ShowtimeSeatSpecification(request.ShowtimeId, request.SeatNumber);
-
-        var seat = await unitOfWork.Repository<ShowtimeSeat>().GetEntityWithSpecAsync(spec);
-
-        if (seat is null) return Result<Unit>.Failure("Seat not found.", 404);
-
         var showtime = await unitOfWork.Repository<Showtime>().GetByIdAsync(request.ShowtimeId);
 
         if (showtime is null) return Result<Unit>.Failure("Showtime not found.", 404);
 
         var showtimeStartTime = showtime.StartTime.TimeOfDay;
 
-        if (request.SelectedDate.TimeOfDay != showtimeStartTime)
+        if (request.Date.TimeOfDay != showtimeStartTime)
             return Result<Unit>.Failure($"Please choose valid time, movie starts at {showtimeStartTime}.", 400);
 
-        if (request.SelectedDate < showtime.StartTime || request.SelectedDate > showtime.EndTime)
+        if (request.Date < showtime.StartTime || request.Date > showtime.EndTime)
             return Result<Unit>.Failure("Selected date is out of showtime range.", 400);
 
-        if (seat.UserId == userId)
-            return Result<Unit>.Failure("You have already reserved this seat.", 400);
+        var spec = new ShowtimeSeatReservationSpecification(request.ShowtimeSeatId, request.Date);
 
-        if (seat.IsReserved) return Result<Unit>.Failure("Seat is already reserved.", 400);
+        var seatReservation = await unitOfWork.Repository<ShowtimeSeatReservation>()
+            .GetEntityWithSpecAsync(spec);
 
-        seat.IsReserved = true;
+        if (seatReservation is not null && seatReservation.IsReserved)
+            return Result<Unit>.Failure("Seat is already reserved for this date.", 400);
 
-        seat.UserId = userId;
+        var reservation = new ShowtimeSeatReservation
+        {
+            ShowtimeSeatId = request.ShowtimeSeatId,
+            ReservedDate = request.Date,
+            UserId = userId,
+            IsReserved = true
+        };
+
+        unitOfWork.Repository<ShowtimeSeatReservation>().Add(reservation);
 
         var result = await unitOfWork.CompleteAsync();
 

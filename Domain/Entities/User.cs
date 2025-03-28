@@ -8,5 +8,5 @@ public class User : IdentityUser
     public string LastName { get; set; } = string.Empty;
     public string? PictureUrl { get; set; }
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
-    public ICollection<ShowtimeSeat> ShowtimeSeats { get; set; } = [];
+    public ICollection<ShowtimeSeatReservation> SeatsReserved { get; set; } = [];
 }

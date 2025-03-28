@@ -4,6 +4,7 @@ using Application.Showtimes.Commands.ReserveSeat;
 using Application.Showtimes.Commands.UpdateShowtime;
 using Application.Showtimes.Queries;
 using Application.Showtimes.ShowtimeDTOs;
+using Application.Showtimes.ShowtimeSeatDTOs;
 using Domain.Common.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,14 +36,14 @@ public class ShowtimesController : BaseApiController
         return HandleResult(await Mediator.Send(new DeleteShowtimeCommand(id)));
     }
 
-    [HttpPut("reserve-seat")]
+    [HttpPost("reserve-seat")]
     public async Task<ActionResult> ReserveSeat(ReserveSeatCommand command)
     {
         return HandleResult(await Mediator.Send(command));
     }
 
     [HttpGet("available-seats/{showtimeId}")]
-    public async Task<ActionResult<IReadOnlyList<int>>> GetAvaiableSeats(string showtimeId)
+    public async Task<ActionResult<IReadOnlyList<SeatDto>>> GetAvaiableSeats(string showtimeId)
     {
         return HandleResult(await Mediator.Send(new GetAvailableSeatsQuery(showtimeId)));
     }

@@ -14,12 +14,5 @@ public class ShowtimeSeatConfiguration : IEntityTypeConfiguration<ShowtimeSeat>
             .WithMany(st => st.ShowtimeSeats)
             .HasForeignKey(ss => ss.ShowtimeId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasOne(ss => ss.User)
-            .WithMany(u => u.ShowtimeSeats)
-            .HasForeignKey(ss => ss.UserId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        builder.HasIndex(ss => new { ss.ShowtimeId, ss.SeatNumber }).IsUnique();
     }
 }

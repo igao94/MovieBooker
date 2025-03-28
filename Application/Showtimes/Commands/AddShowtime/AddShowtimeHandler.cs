@@ -36,8 +36,7 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
             .Select(seatNumber => new ShowtimeSeat
             {
                 ShowtimeId = showTime.Id,
-                SeatNumber = seatNumber,
-                IsReserved = false
+                SeatNumber = seatNumber
             })
             .ToList();
 

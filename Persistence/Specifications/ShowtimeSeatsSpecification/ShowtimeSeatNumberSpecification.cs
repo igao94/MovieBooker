@@ -5,10 +5,8 @@ namespace Persistence.Specifications.ShowtimeSeatsSpecification;
 public class ShowtimeSeatNumberSpecification : BaseSpecification<ShowtimeSeat, int>
 {
     public ShowtimeSeatNumberSpecification(string showtimeId)
-        : base(ss => ss.ShowtimeId == showtimeId && !ss.IsReserved)
+        : base(ss => ss.ShowtimeId == showtimeId)
     {
-        AddSelect(ss => ss.SeatNumber);
-
         AddOrderBy(ss => ss.SeatNumber);
     }
 }
