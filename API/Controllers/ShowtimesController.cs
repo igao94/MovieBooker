@@ -1,6 +1,7 @@
 ﻿using Application.Showtimes.Commands.AddShowtime;
 using Application.Showtimes.Commands.DeleteShowtime;
 using Application.Showtimes.Commands.ReserveSeat;
+using Application.Showtimes.Queries.GetAllShowtimes;
 using Application.Showtimes.Queries.GetAvailableSeats;
 using Application.Showtimes.Queries.GetShowtimeById;
 using Application.Showtimes.ShowtimeDTOs;
@@ -13,6 +14,12 @@ namespace API.Controllers;
 
 public class ShowtimesController : BaseApiController
 {
+    [HttpGet]
+    public async Task<ActionResult<ShowtimeDto>> GetAllShowtimes()
+    {
+        return HandleResult(await Mediator.Send(new GetAllShowtimesQuery()));
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<ShowtimeDto>> GetShowtimeById(string id)
     {
