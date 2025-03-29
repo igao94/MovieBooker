@@ -32,7 +32,10 @@ public class ActorsController : BaseApiController
     {
         var result = await Mediator.Send(new CreateActorCommand(createActorDto));
 
-        return HandleCreatedResult<ActorDto>(nameof(GetActorById), new { id = result.Value?.Id }, result.Value);
+        return HandleCreatedResult(result,
+            nameof(GetActorById), 
+            new { id = result.Value?.Id }, 
+            result.Value);
     }
     
     [Authorize(Policy = PolicyTypes.RequireAdminRole)]

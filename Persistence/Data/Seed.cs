@@ -1,6 +1,7 @@
 ﻿using Domain.Common.Constants;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Data;
 
@@ -77,7 +78,7 @@ public class Seed
             }
         }
 
-        if (!context.Movies.Any())
+        if (!context.Movies.IgnoreQueryFilters().Any())
         {
             List<Movie> movies =
             [
@@ -91,8 +92,7 @@ public class Seed
                     Director = "Anthony and Joe Russo",
                     Language = "English",
                     Duration = "3 hours, 2 minutes",
-                    Rating = 8.4m,
-                    IsActive = true
+                    Rating = 8.4m
                 },
 
                 new ()
@@ -105,8 +105,7 @@ public class Seed
                     Director = "Jon Favreau",
                     Language = "English",
                     Duration = "2 hours, 6 minutes",
-                    Rating = 7.9m,
-                    IsActive = true
+                    Rating = 7.9m
                 },
 
                 new ()
@@ -119,8 +118,7 @@ public class Seed
                     Director = "Jon Watts",
                     Language = "English",
                     Duration = "2 hours, 28 minutes",
-                    Rating = 8.3m,
-                    IsActive = true
+                    Rating = 8.3m
                 },
 
                 new ()
@@ -133,8 +131,7 @@ public class Seed
                     Director = "James Gunn",
                     Language = "English",
                     Duration = "2 hours, 1 minute",
-                    Rating = 8.0m,
-                    IsActive = true
+                    Rating = 8.0m
                 },
 
                 new ()
@@ -147,8 +144,7 @@ public class Seed
                     Director = "Ryan Coogler",
                     Language = "English",
                     Duration = "2 hours, 14 minutes",
-                    Rating = 7.3m,
-                    IsActive = true
+                    Rating = 7.3m
                 },
 
                 new ()
@@ -161,8 +157,7 @@ public class Seed
                     Director = "Christopher Nolan",
                     Language = "English",
                     Duration = "2 hours, 28 minutes",
-                    Rating = 8.8m,
-                    IsActive = false
+                    Rating = 8.8m
                 },
 
                 new ()
@@ -175,8 +170,7 @@ public class Seed
                     Director = "Christopher Nolan",
                     Language = "English",
                     Duration = "2 hours, 49 minutes",
-                    Rating = 8.6m,
-                    IsActive = false
+                    Rating = 8.6m
                 },
 
                 new ()
@@ -189,8 +183,7 @@ public class Seed
                     Director = "Ridley Scott",
                     Language = "English",
                     Duration = "2 hours, 24 minutes",
-                    Rating = 8.0m,
-                    IsActive = false
+                    Rating = 8.0m
                 },
 
                 new ()
@@ -203,8 +196,7 @@ public class Seed
                     Director = "Robert Zemeckis",
                     Language = "English",
                     Duration = "2 hours, 22 minutes",
-                    Rating = 8.8m,
-                    IsActive = false
+                    Rating = 8.8m
                 },
 
                 new ()
@@ -217,8 +209,7 @@ public class Seed
                     Director = "Frank Darabont",
                     Language = "English",
                     Duration = "2 hours, 22 minutes",
-                    Rating = 9.3m,
-                    IsActive = false
+                    Rating = 9.3m
                 }
 
             ];

@@ -13,7 +13,12 @@ public class CreateShowtimeValidator : AbstractValidator<AddShowtimeCommand>
         RuleFor(st => st.CreateShowtimeDto.StartTime)
             .NotEmpty().WithMessage("StartTime is required.")
             .Must(time => time > DateTime.UtcNow).WithMessage("Start time must be in the future.")
-            .Must(time => time.Kind == DateTimeKind.Utc).WithMessage("Start time must be in UTC format.");        
+            .Must(time => time.Kind == DateTimeKind.Utc).WithMessage("Start time must be in UTC format.");    
+        
+        RuleFor(st => st.CreateShowtimeDto.EndTime)
+            .NotEmpty().WithMessage("EndTime is required.")
+            .Must(time => time > DateTime.UtcNow).WithMessage("EndTime time must be in the future.")
+            .Must(time => time.Kind == DateTimeKind.Utc).WithMessage("EndTime time must be in UTC format.");        
 
         RuleFor(st => st.CreateShowtimeDto.AvailableSeats)
             .NotEmpty().WithMessage("Seats are required.");

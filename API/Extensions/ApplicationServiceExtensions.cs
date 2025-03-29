@@ -6,6 +6,7 @@ using Application.Movies.Validators;
 using Domain.Interfaces;
 using FluentValidation;
 using Infrastructure.Security;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -61,6 +62,8 @@ public static class ApplicationServiceExtensions
         services.AddTransient<ExceptionMiddleware>();
 
         services.AddValidatorsFromAssemblyContaining<CreateMovieValidator>();
+
+        services.AddHostedService<MovieDeactivationService>();
 
         return services;
     }

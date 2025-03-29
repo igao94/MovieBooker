@@ -32,7 +32,10 @@ public class MoviesController : BaseApiController
     {
         var result = await Mediator.Send(new AddMovieCommand(movieDto));
 
-        return HandleCreatedResult<MovieDto>(nameof(GetMovieById), new { id = result.Value?.Id }, result.Value);
+        return HandleCreatedResult(result,
+            nameof(GetMovieById), 
+            new { id = result.Value?.Id }, 
+            result.Value);
     }
 
     [Authorize(Policy = PolicyTypes.RequireAdminRole)]

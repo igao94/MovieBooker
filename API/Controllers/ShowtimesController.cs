@@ -32,7 +32,8 @@ public class ShowtimesController : BaseApiController
     {
         var result = await Mediator.Send(new AddShowtimeCommand(createShowTimeDto));
 
-        return HandleCreatedResult<ShowtimeDto>(nameof(GetShowtimeById),
+        return HandleCreatedResult(result,
+            nameof(GetShowtimeById),
             new { id = result.Value?.Id },
             result.Value);
     }

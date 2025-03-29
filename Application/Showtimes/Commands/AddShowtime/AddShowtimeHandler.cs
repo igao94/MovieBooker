@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
+using Persistence.Specifications.ShowtimesSpecification;
 
 namespace Application.Showtimes.Commands.AddShowtime;
 
@@ -21,21 +22,31 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
 
         var startTime = request.CreateShowtimeDto.StartTime;
 
-        var endTime = startTime.AddDays(6);
+        var endTime = request.CreateShowtimeDto.EndTime;
 
-        var showTime = new Showtime
+        if (endTime <= startTime) return Result<ShowtimeDto>
+                .Failure("End time must be greater than start time.", 400);
+
+        var spec = new ExistingShowtimeSpecification(request.CreateShowtimeDto.MovieId);
+
+        var showtime = await unitOfWork.Repository<Showtime>().GetEntityWithSpecAsync(spec);
+
+        if (showtime is not null) return Result<ShowtimeDto>
+                .Failure("Showtime already exist for this movie.", 400);
+
+        showtime = new Showtime
         {
             MovieId = movie.Id,
             StartTime = startTime,
             EndTime = endTime
         };
 
-        unitOfWork.Repository<Showtime>().Add(showTime);
+        unitOfWork.Repository<Showtime>().Add(showtime);
 
         var seats = Enumerable.Range(1, request.CreateShowtimeDto.AvailableSeats)
             .Select(seatNumber => new ShowtimeSeat
             {
-                ShowtimeId = showTime.Id,
+                ShowtimeId = showtime.Id,
                 SeatNumber = seatNumber
             })
             .ToList();
@@ -45,7 +56,7 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
         var result = await unitOfWork.CompleteAsync();
 
         return result
-            ? Result<ShowtimeDto>.Success(mapper.Map<ShowtimeDto>(showTime))
+            ? Result<ShowtimeDto>.Success(mapper.Map<ShowtimeDto>(showtime))
             : Result<ShowtimeDto>.Failure("Failed to create showtime.", 400);
     }
 }

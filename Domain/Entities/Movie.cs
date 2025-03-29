@@ -12,7 +12,7 @@ public class Movie : BaseEntity
     public decimal? Rating { get; set; }
     public string? PosterUrl { get; set; }
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
-    public bool IsActive { get; set; } = true;
+    public bool IsActive { get; set; }
     public ICollection<MovieActor> Actors { get; set; } = [];
     public ICollection<Showtime> Showtimes { get; set; } = [];
 }
