@@ -34,12 +34,12 @@ public class ActorsController : BaseApiController
 
         return HandleCreatedResult<ActorDto>(nameof(GetActorById), new { id = result.Value?.Id }, result.Value);
     }
-
+    
     [Authorize(Policy = PolicyTypes.RequireAdminRole)]
-    [HttpPost("add-actor-to-movie/{movieId}/{actorId}")]
-    public async Task<ActionResult> AddActorToMovie(string movieId, string actorId)
+    [HttpPost("add-actor-to-movie")]
+    public async Task<ActionResult> AddActorToMovie(AddActorToMovieCommand command)
     {
-        return HandleResult(await Mediator.Send(new AddActorToMovieCommand(movieId, actorId)));
+        return HandleResult(await Mediator.Send(command));
     }
 
     [Authorize(Policy = PolicyTypes.RequireAdminRole)]
