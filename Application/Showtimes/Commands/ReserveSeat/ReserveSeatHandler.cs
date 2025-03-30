@@ -4,6 +4,7 @@ using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
 using Persistence.Specifications.ShowtimeSeatReservationsSpecification;
+using Persistence.Specifications.ShowtimeSeatsSpecification;
 
 namespace Application.Showtimes.Commands.ReserveSeat;
 
@@ -14,20 +15,18 @@ public class ReserveSeatHandler(IUnitOfWork unitOfWork,
     {
         var userId = userAccessor.GetUserId();
 
-        var seat = await unitOfWork.Repository<ShowtimeSeat>().GetByIdAsync(request.ShowtimeSeatId);
+        var seatSpec = new ShowtimeSeatWithShowtimeSpecifcation(request.ShowtimeSeatId);
+
+        var seat = await unitOfWork.Repository<ShowtimeSeat>().GetEntityWithSpecAsync(seatSpec);
 
         if (seat is null) return Result<Unit>.Failure("Seat not found.", 404);
 
-        var showtime = await unitOfWork.Repository<Showtime>().GetByIdAsync(request.ShowtimeId);
-
-        if (showtime is null) return Result<Unit>.Failure("Showtime not found.", 404);
-
-        var showtimeStartTime = showtime.StartTime.TimeOfDay;
+        var showtimeStartTime = seat.Showtime.StartTime.TimeOfDay;
 
         if (request.Date.TimeOfDay != showtimeStartTime)
             return Result<Unit>.Failure($"Please choose valid time, movie starts at {showtimeStartTime}.", 400);
 
-        if (request.Date < showtime.StartTime || request.Date > showtime.EndTime)
+        if (request.Date < seat.Showtime.StartTime || request.Date > seat.Showtime.EndTime)
             return Result<Unit>.Failure("Date is out of showtime range.", 400);
 
         var spec = new SeatReservationBySeatIdSpecification(request.ShowtimeSeatId, request.Date);

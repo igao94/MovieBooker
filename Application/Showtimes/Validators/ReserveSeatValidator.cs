@@ -7,9 +7,6 @@ public class ReserveSeatValidator : AbstractValidator<ReserveSeatCommand>
 {
     public ReserveSeatValidator()
     {
-        RuleFor(r => r.ShowtimeId)
-            .NotEmpty().WithMessage("ShowtimeId is required.");
-
         RuleFor(r => r.ShowtimeSeatId)
             .NotEmpty().WithMessage("ShowtimeSeatId is required.");
 
