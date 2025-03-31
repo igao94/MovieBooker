@@ -10,6 +10,7 @@ public interface ISpecification<T>
     List<Expression<Func<T, object>>> Includes { get; }
     List<string> IncludeStrings { get; }
     bool IgnoreGlobalQueryFilter { get; }
+    bool IsSplitQuery { get; }
 }
 
 public interface ISpecification<T, TResult> : ISpecification<T>

@@ -31,6 +31,8 @@ public class SpecificationEvaluator<T> where T : BaseEntity
 
         if (spec.IgnoreGlobalQueryFilter) query = query.IgnoreQueryFilters();
 
+        if (spec.IsSplitQuery) query = query.AsSplitQuery();
+
         return query;
     }
 
@@ -59,6 +61,8 @@ public class SpecificationEvaluator<T> where T : BaseEntity
         query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
 
         if (spec.IgnoreGlobalQueryFilter) query = query.IgnoreQueryFilters();
+
+        if (spec.IsSplitQuery) query = query.AsSplitQuery();
 
         var selectQuery = query as IQueryable<TResult>;
 

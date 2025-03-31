@@ -15,7 +15,9 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
 
     public List<string> IncludeStrings { get; } = [];
 
-    public bool IgnoreGlobalQueryFilter { get; private set; }
+    public bool IgnoreGlobalQueryFilter { get; protected set; }
+
+    public bool IsSplitQuery { get; protected set; }
 
     protected void AddInclude(Expression<Func<T, object>> includeExpression)
     {
@@ -36,8 +38,6 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     {
         OrderByDescending = orderByDescExpression;
     }
-
-    protected void ApplyIgnoreGlobalQueryFilter() => IgnoreGlobalQueryFilter = true;
 }
 
 public class BaseSpecification<T, TResult>(Expression<Func<T, bool>>? criteria)

@@ -6,11 +6,13 @@ public class MovieWithIgnoreQueryFilterSpecification : BaseSpecification<Movie>
 {
     public MovieWithIgnoreQueryFilterSpecification(string id) : base(m => m.Id == id)
     {
-        ApplyIgnoreGlobalQueryFilter();
+        IgnoreGlobalQueryFilter = true;
 
         AddInclude("Showtimes.ShowtimeSeats");
 
         AddInclude("Actors.Actor");
+
+        IsSplitQuery = true;
     }
 
     public MovieWithIgnoreQueryFilterSpecification(MovieSpecParams specParams) : base(m =>
@@ -19,7 +21,7 @@ public class MovieWithIgnoreQueryFilterSpecification : BaseSpecification<Movie>
         (!specParams.Actors.Any() || m.Actors.Any(a => specParams.Actors
             .Any(actor => a.Actor.FullName.Contains(actor.Trim())))))
     {
-        ApplyIgnoreGlobalQueryFilter();
+        IgnoreGlobalQueryFilter = true;
 
         switch (specParams.Sort)
         {

@@ -8,7 +8,7 @@ public class ShowtimeWithMoviesSpecification : BaseSpecification<Showtime>
     {
         AddInclude(st => st.Movie);
 
-        AddOrderBy(st => st.Movie.ReleaseDate);
+        AddOrderByDescending(st => st.Movie.ReleaseDate);
     }
 
     public ShowtimeWithMoviesSpecification(string id) : base(st => st.Id == id)

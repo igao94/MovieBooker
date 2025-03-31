@@ -9,6 +9,8 @@ public class MovieSpecification : BaseSpecification<Movie>
         AddInclude("Showtimes.ShowtimeSeats");
 
         AddInclude("Actors.Actor");
+
+        IsSplitQuery = true;
     }
 
     public MovieSpecification(MovieSpecParams specParams) : base(m =>

@@ -7,7 +7,7 @@ namespace Infrastructure.Services;
 
 public class MovieDeactivationService(IServiceScopeFactory scopeFactory) : BackgroundService
 {
-    private readonly TimeSpan _checkInterval = TimeSpan.FromMinutes(5);
+    private readonly TimeSpan _checkInterval = TimeSpan.FromHours(1);
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
