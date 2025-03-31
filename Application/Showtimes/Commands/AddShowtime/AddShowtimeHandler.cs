@@ -14,11 +14,10 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
     public async Task<Result<ShowtimeDto>> Handle(AddShowtimeCommand request,
         CancellationToken cancellationToken)
     {
-        var movie = await unitOfWork.Repository<Movie>().GetByIdAsync(request.CreateShowtimeDto.MovieId);
+        var movieValidation = await ValidateMovieAsync(request);
 
-        if (movie is null) return Result<ShowtimeDto>.Failure("Movie not found.", 404);
-
-        if (!movie.IsActive) return Result<ShowtimeDto>.Failure("Movie not active.", 400);
+        if (!movieValidation.IsSuccess) 
+            return Result<ShowtimeDto>.Failure(movieValidation.Error!, movieValidation.StatusCode);
 
         var startTime = request.CreateShowtimeDto.StartTime;
 
@@ -36,13 +35,35 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
 
         showtime = new Showtime
         {
-            MovieId = movie.Id,
+            MovieId = request.CreateShowtimeDto.MovieId,
             StartTime = startTime,
-            EndTime = endTime
+            EndTime = endTime,
         };
 
         unitOfWork.Repository<Showtime>().Add(showtime);
 
+        AddSeats(request, showtime);
+
+        var result = await unitOfWork.CompleteAsync();
+
+        return result
+            ? Result<ShowtimeDto>.Success(mapper.Map<ShowtimeDto>(showtime))
+            : Result<ShowtimeDto>.Failure("Failed to create showtime.", 400);
+    }
+
+    private async Task<Result<bool>> ValidateMovieAsync(AddShowtimeCommand request)
+    {
+        var movie = await unitOfWork.Repository<Movie>().GetByIdAsync(request.CreateShowtimeDto.MovieId);
+
+        if (movie is null) return Result<bool>.Failure("Movie not found.", 404);
+
+        if (!movie.IsActive) return Result<bool>.Failure("Movie is not active.", 400);
+
+        return Result<bool>.Success(true);
+    }
+
+    private void AddSeats(AddShowtimeCommand request, Showtime showtime)
+    {
         var seats = Enumerable.Range(1, request.CreateShowtimeDto.AvailableSeats)
             .Select(seatNumber => new ShowtimeSeat
             {
@@ -52,11 +73,5 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
             .ToList();
 
         unitOfWork.Repository<ShowtimeSeat>().AddRange(seats);
-
-        var result = await unitOfWork.CompleteAsync();
-
-        return result
-            ? Result<ShowtimeDto>.Success(mapper.Map<ShowtimeDto>(showtime))
-            : Result<ShowtimeDto>.Failure("Failed to create showtime.", 400);
     }
 }
