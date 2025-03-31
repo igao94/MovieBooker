@@ -16,17 +16,33 @@ public class GetAvailableSeatsHandler(IUnitOfWork unitOfWork)
     {
         var showtime = await unitOfWork.Repository<Showtime>().GetByIdAsync(request.ShowtimeId);
 
-        if (showtime is null) return Result<IReadOnlyList<SeatDto>>.Failure("Showtime not found.", 404);
+        var validationResult = ValidateShowtimeAndDate(showtime, request.Date);
+
+        var seats = await GetAvailableSeatsAsync(request);
+
+        return validationResult.IsSuccess
+            ? Result<IReadOnlyList<SeatDto>>.Success(seats)
+            : Result<IReadOnlyList<SeatDto>>.Failure(validationResult.Error!, validationResult.StatusCode);
+    }
+
+    private static Result<bool> ValidateShowtimeAndDate(Showtime? showtime, DateTime date)
+    {
+        if (showtime is null) return Result<bool>.Failure("Showtime not found.", 404);
 
         var showtimeStartTime = showtime.StartTime.TimeOfDay;
 
-        if (request.Date.TimeOfDay != showtimeStartTime)
-            return Result<IReadOnlyList<SeatDto>>
-                .Failure($"Please choose valid time, movie starts at {showtimeStartTime}.", 400);
+        if (date.TimeOfDay != showtimeStartTime)
+            return Result<bool>
+                .Failure($"Please choose a valid time, movie starts at: {showtime.StartTime}.", 400);
 
-        if (request.Date < showtime.StartTime || request.Date > showtime.EndTime)
-            return Result<IReadOnlyList<SeatDto>>.Failure("Date is out of showtime range.", 400);
+        if (date < showtime.StartTime || date > showtime.EndTime)
+            return Result<bool>.Failure("Date is out of showtime range.", 400);
 
+        return Result<bool>.Success(true);
+    }
+
+    private async Task<IReadOnlyList<SeatDto>> GetAvailableSeatsAsync(GetAvailableSeatsQuery request)
+    {
         var spec = new ShowtimeSeatNumberSpecification(request.ShowtimeId);
 
         var seats = await unitOfWork.Repository<ShowtimeSeat>().GetEntitiesWithSpecAsync(spec);
@@ -36,16 +52,22 @@ public class GetAvailableSeatsHandler(IUnitOfWork unitOfWork)
         var reservedSeats = await unitOfWork.Repository<ShowtimeSeatReservation>()
             .GetEntitiesWithSpecAsync(reservedSpec);
 
-        var availableSeats = seats
-            .Where(seat => reservedSeats.Count == 0 || !reservedSeats.Any(rs => rs.ShowtimeSeatId == seat.Id))
-            .Select(seat => new SeatDto
-            {
-                Id = seat.Id,
-                SeatNumber = seat.SeatNumber,
-            })
-            .OrderByDescending(s => s.SeatNumber)
-            .ToList();
+        var availableSeats = FilterAvailableSeats(seats, reservedSeats);
 
-        return Result<IReadOnlyList<SeatDto>>.Success(availableSeats);
+        return availableSeats;
+    }
+
+    private static List<SeatDto> FilterAvailableSeats(IReadOnlyList<ShowtimeSeat> seats,
+        IReadOnlyList<ShowtimeSeatReservation> reservedSeats)
+    {
+        return seats
+            .Where(seat => !reservedSeats.Any(rs => rs.ShowtimeSeatId == seat.Id))
+            .Select(s => new SeatDto
+            {
+                Id = s.Id,
+                SeatNumber = s.SeatNumber,
+            })
+            .OrderBy(seat => seat.SeatNumber)
+            .ToList();
     }
 }
