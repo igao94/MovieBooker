@@ -9,4 +9,5 @@ public class User : IdentityUser
     public string? PictureUrl { get; set; }
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
     public ICollection<ShowtimeSeatReservation> SeatsReserved { get; set; } = [];
+    public ICollection<UserPhoto> UserPhotos { get; set; } = [];
 }

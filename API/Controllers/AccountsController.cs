@@ -1,5 +1,5 @@
-﻿using Application.Account.Command.Login;
-using Application.Account.Command.RegisterUser;
+﻿using Application.Account.Commands.Login;
+using Application.Account.Commands.RegisterUser;
 using Application.Account.DTOs;
 using Application.Account.Queries.GetCurrentUserInfo;
 using Microsoft.AspNetCore.Authorization;

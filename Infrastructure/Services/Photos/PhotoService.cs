@@ -31,27 +31,35 @@ public class PhotoService : IPhotoService
 
     public async Task<PhotoUploadResult?> UploadPhotoAsync(IFormFile file)
     {
-        if (file.Length > 0)
+        if (file.Length <= 0) return null;
+
+        await using var stream = file.OpenReadStream();
+
+        var uploadParams = new ImageUploadParams
         {
-            await using var stream = file.OpenReadStream();
+            File = new FileDescription(file.FileName, stream),
+            Folder = "MovieBooker"
+        };
 
-            var uploadParams = new ImageUploadParams
-            {
-                File = new FileDescription(file.FileName, stream),
-                Folder = "MovieBooker"
-            };
+        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+        if (uploadResult.Error is not null) throw new Exception(uploadResult.Error.Message);
 
-            if (uploadResult.Error is not null) throw new Exception(uploadResult.Error.Message);
+        var hiddenFolderPublicId = RemoveFolderFromPublicId(uploadResult.PublicId, uploadParams.Folder);
 
-            return new PhotoUploadResult
-            {
-                PublicId = uploadResult.PublicId,
-                Url = uploadResult.SecureUrl.AbsoluteUri
-            };
-        }
+        return new PhotoUploadResult
+        {
+            PublicId = hiddenFolderPublicId,
+            Url = uploadResult.SecureUrl.AbsoluteUri
+        };
+    }
 
-        return null;
+    private static string RemoveFolderFromPublicId(string publicId, string folderName)
+    {
+        var folderPrefix = folderName + "/";
+
+        if (publicId.StartsWith(folderPrefix)) return publicId.Substring(folderPrefix.Length);
+
+        return publicId;
     }
 }

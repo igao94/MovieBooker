@@ -1,4 +1,4 @@
-﻿using Application.Account.Command.Login;
+﻿using Application.Account.Commands.Login;
 using FluentValidation;
 
 namespace Application.Account.Validatiors;
