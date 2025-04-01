@@ -7,6 +7,7 @@ using Domain.Interfaces;
 using FluentValidation;
 using Infrastructure.Security;
 using Infrastructure.Services;
+using Infrastructure.Services.Photos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -64,6 +65,10 @@ public static class ApplicationServiceExtensions
         services.AddValidatorsFromAssemblyContaining<CreateMovieValidator>();
 
         services.AddHostedService<MovieDeactivationService>();
+
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+
+        services.AddScoped<IPhotoService, PhotoService>();
 
         return services;
     }
