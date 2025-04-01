@@ -13,16 +13,9 @@ public class TokenService(IConfiguration config, UserManager<User> userManager) 
 {
     public async Task<string> GetTokenAsync(User user)
     {
-        var tokenKey = config["Jwt:TokenKey"]
-            ?? throw new Exception("Can't access tokenKey.");
+        var creds = GetCredentials();
 
-        if (tokenKey.Length < 64) throw new Exception("TokenKey needs to be longer.");
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
-
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-        if (user is null || user.UserName is null || user.Email is null)
+        if (user.UserName is null || user.Email is null)
             throw new Exception("Can't access user.");
 
         List<Claim> claims =
@@ -50,5 +43,16 @@ public class TokenService(IConfiguration config, UserManager<User> userManager) 
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         return tokenHandler.WriteToken(token);
+    }
+
+    private SigningCredentials GetCredentials()
+    {
+        var tokenKey = config["Jwt:TokenKey"] ?? throw new Exception("Can't access TokenKey.");
+
+        if (tokenKey.Length < 64) throw new Exception("TokenKey needs to be longer.");
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
+
+        return new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature); 
     }
 }

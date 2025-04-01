@@ -14,9 +14,9 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
     public async Task<Result<ShowtimeDto>> Handle(AddShowtimeCommand request,
         CancellationToken cancellationToken)
     {
-        var movieValidation = await ValidateMovieAsync(request);
+        var movieValidation = await ValidateMovieAsync(request.CreateShowtimeDto.MovieId);
 
-        if (!movieValidation.IsSuccess) 
+        if (!movieValidation.IsSuccess)
             return Result<ShowtimeDto>.Failure(movieValidation.Error!, movieValidation.StatusCode);
 
         var startTime = request.CreateShowtimeDto.StartTime;
@@ -42,7 +42,7 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
 
         unitOfWork.Repository<Showtime>().Add(showtime);
 
-        AddSeats(request, showtime);
+        AddSeats(request.CreateShowtimeDto.AvailableSeats, showtime.Id);
 
         var result = await unitOfWork.CompleteAsync();
 
@@ -51,9 +51,9 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
             : Result<ShowtimeDto>.Failure("Failed to create showtime.", 400);
     }
 
-    private async Task<Result<bool>> ValidateMovieAsync(AddShowtimeCommand request)
+    private async Task<Result<bool>> ValidateMovieAsync(string movieId)
     {
-        var movie = await unitOfWork.Repository<Movie>().GetByIdAsync(request.CreateShowtimeDto.MovieId);
+        var movie = await unitOfWork.Repository<Movie>().GetByIdAsync(movieId);
 
         if (movie is null) return Result<bool>.Failure("Movie not found.", 404);
 
@@ -62,12 +62,12 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
         return Result<bool>.Success(true);
     }
 
-    private void AddSeats(AddShowtimeCommand request, Showtime showtime)
+    private void AddSeats(int availableSeats, string showtimeId)
     {
-        var seats = Enumerable.Range(1, request.CreateShowtimeDto.AvailableSeats)
+        var seats = Enumerable.Range(1, availableSeats)
             .Select(seatNumber => new ShowtimeSeat
             {
-                ShowtimeId = showtime.Id,
+                ShowtimeId = showtimeId,
                 SeatNumber = seatNumber
             })
             .ToList();

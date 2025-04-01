@@ -1,5 +1,6 @@
 ﻿using Application.Core;
 using Application.Showtimes.ShowtimeSeatDTOs;
+using Azure.Core;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
@@ -14,26 +15,26 @@ public class GetAvailableSeatsHandler(IUnitOfWork unitOfWork)
     public async Task<Result<IReadOnlyList<SeatDto>>> Handle(GetAvailableSeatsQuery request,
         CancellationToken cancellationToken)
     {
-        var showtime = await unitOfWork.Repository<Showtime>().GetByIdAsync(request.ShowtimeId);
+        var validationResult = await ValidateShowtimeAndDateAsync(request.ShowtimeId, request.Date);
 
-        var validationResult = ValidateShowtimeAndDate(showtime, request.Date);
-
-        var seats = await GetAvailableSeatsAsync(request);
+        var seats = await GetAvailableSeatsAsync(request.ShowtimeId, request.Date);
 
         return validationResult.IsSuccess
             ? Result<IReadOnlyList<SeatDto>>.Success(seats)
             : Result<IReadOnlyList<SeatDto>>.Failure(validationResult.Error!, validationResult.StatusCode);
     }
 
-    private static Result<bool> ValidateShowtimeAndDate(Showtime? showtime, DateTime date)
+    private async Task<Result<bool>> ValidateShowtimeAndDateAsync(string showtimeId, DateTime date)
     {
+        var showtime = await unitOfWork.Repository<Showtime>().GetByIdAsync(showtimeId);
+
         if (showtime is null) return Result<bool>.Failure("Showtime not found.", 404);
 
         var showtimeStartTime = showtime.StartTime.TimeOfDay;
 
         if (date.TimeOfDay != showtimeStartTime)
             return Result<bool>
-                .Failure($"Please choose a valid time, movie starts at: {showtime.StartTime}.", 400);
+                .Failure($"Please choose a valid time, movie starts at: {showtime.StartTime.TimeOfDay}.", 400);
 
         if (date < showtime.StartTime || date > showtime.EndTime)
             return Result<bool>.Failure("Date is out of showtime range.", 400);
@@ -41,13 +42,13 @@ public class GetAvailableSeatsHandler(IUnitOfWork unitOfWork)
         return Result<bool>.Success(true);
     }
 
-    private async Task<IReadOnlyList<SeatDto>> GetAvailableSeatsAsync(GetAvailableSeatsQuery request)
+    private async Task<IReadOnlyList<SeatDto>> GetAvailableSeatsAsync(string showtimeId, DateTime date)
     {
-        var spec = new ShowtimeSeatNumberSpecification(request.ShowtimeId);
+        var spec = new ShowtimeSeatNumberSpecification(showtimeId);
 
         var seats = await unitOfWork.Repository<ShowtimeSeat>().GetEntitiesWithSpecAsync(spec);
 
-        var reservedSpec = new ShowtimeSeatReservationSpecification(request.ShowtimeId, request.Date);
+        var reservedSpec = new ShowtimeSeatReservationSpecification(showtimeId, date);
 
         var reservedSeats = await unitOfWork.Repository<ShowtimeSeatReservation>()
             .GetEntitiesWithSpecAsync(reservedSpec);
