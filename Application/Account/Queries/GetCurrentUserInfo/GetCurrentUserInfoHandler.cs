@@ -21,7 +21,7 @@ public class GetCurrentUserInfoHandler(IUserAccessor userAccessor)
             Id = user.Id,
             Email = user.Email,
             Username = user.UserName,
-            PictureUrl = user.PictureUrl
+            PictureUrl = user?.PictureUrl
         });
     }
 }

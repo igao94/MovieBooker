@@ -44,7 +44,7 @@ public class RegisterUserHandler(IUnitOfWork unitOfWork,
             Email = user.Email,
             Username = user.UserName,
             Token = token,
-            PictureUrl = null
+            PictureUrl = user?.PictureUrl
         });
     }
 }

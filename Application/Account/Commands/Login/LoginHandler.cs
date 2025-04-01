@@ -28,7 +28,7 @@ public class LoginHandler(IUnitOfWork unitOfWork,
             Username = user.UserName,
             Email = user.Email,
             Token = token,
-            PictureUrl = null
+            PictureUrl = user?.PictureUrl
         });
     }
 }

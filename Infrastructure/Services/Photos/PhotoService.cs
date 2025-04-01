@@ -45,21 +45,10 @@ public class PhotoService : IPhotoService
 
         if (uploadResult.Error is not null) throw new Exception(uploadResult.Error.Message);
 
-        var hiddenFolderPublicId = RemoveFolderFromPublicId(uploadResult.PublicId, uploadParams.Folder);
-
         return new PhotoUploadResult
         {
-            PublicId = hiddenFolderPublicId,
+            PublicId = uploadResult.PublicId,
             Url = uploadResult.SecureUrl.AbsoluteUri
         };
-    }
-
-    private static string RemoveFolderFromPublicId(string publicId, string folderName)
-    {
-        var folderPrefix = folderName + "/";
-
-        if (publicId.StartsWith(folderPrefix)) return publicId.Substring(folderPrefix.Length);
-
-        return publicId;
     }
 }
