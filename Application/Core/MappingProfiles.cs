@@ -33,5 +33,7 @@ public class MappingProfiles : Profile
 
         CreateMap<UserPhoto, UserPhotoDto>()
             .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.UserName));
+
+        CreateMap<User, UserDto>();
     }
 }

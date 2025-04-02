@@ -2,6 +2,7 @@
 using Application.Users.Commands.DeletePhoto;
 using Application.Users.Commands.SetMainPhoto;
 using Application.Users.DTOs;
+using Application.Users.Queries.GetUserById;
 using Application.Users.Queries.GetUserPhotos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,12 @@ namespace API.Controllers;
 
 public class UsersController : BaseApiController
 {
+    [HttpGet("get-user/{userId}")]
+    public async Task<ActionResult<UserDto>> GetUserById(string userId)
+    {
+        return HandleResult(await Mediator.Send(new GetUserByIdQuery(userId)));
+    }
+
     [HttpPost("add-photo")]
     public async Task<ActionResult<UserPhotoDto>> AddPhoto([FromForm] AddPhotoCommand command)
     {

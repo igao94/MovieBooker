@@ -5,11 +5,14 @@ using System.Collections.Concurrent;
 namespace Persistence.Data;
 
 public class UnitOfWork(AppDbContext context,
-    IAccountRepository accountRepository) : IUnitOfWork
+    IAccountRepository accountRepository,
+    IUserRepository userRepository) : IUnitOfWork
 {
     private readonly ConcurrentDictionary<string, object> _repositories = new();
 
     public IAccountRepository AccountRepository => accountRepository;
+
+    public IUserRepository UserRepository => userRepository;
 
     public async Task<bool> CompleteAsync() => await context.SaveChangesAsync() > 0;
 

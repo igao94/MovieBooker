@@ -26,6 +26,8 @@ public class LoginHandler(IUnitOfWork unitOfWork,
         {
             Id = user.Id,
             Username = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
             Email = user.Email,
             Token = token,
             PictureUrl = user?.PictureUrl

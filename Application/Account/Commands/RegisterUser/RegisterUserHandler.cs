@@ -43,6 +43,8 @@ public class RegisterUserHandler(IUnitOfWork unitOfWork,
             Id = user.Id,
             Email = user.Email,
             Username = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
             Token = token,
             PictureUrl = user?.PictureUrl
         });

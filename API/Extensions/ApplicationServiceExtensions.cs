@@ -45,6 +45,8 @@ public static class ApplicationServiceExtensions
 
         services.AddScoped<IAccountRepository, AccountRepository>();
 
+        services.AddScoped<IUserRepository, UserRepository>();
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IUserAccessor, UserAccessor>();

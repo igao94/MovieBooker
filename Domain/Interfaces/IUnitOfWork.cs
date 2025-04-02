@@ -6,5 +6,6 @@ public interface IUnitOfWork
 {
     IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity;
     IAccountRepository AccountRepository { get; }
+    IUserRepository UserRepository { get; }
     Task<bool> CompleteAsync();
 }
