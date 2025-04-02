@@ -1,6 +1,7 @@
 ﻿using Application.Users;
 using Application.Users.Commands.AddPhoto;
 using Application.Users.Commands.DeletePhoto;
+using Application.Users.Commands.DeleteUser;
 using Application.Users.Commands.SetMainPhoto;
 using Application.Users.DTOs;
 using Application.Users.Queries.GetAllUsers;
@@ -22,6 +23,12 @@ public class UsersController : BaseApiController
     public async Task<ActionResult<UserDto>> GetUserById(string userId)
     {
         return HandleResult(await Mediator.Send(new GetUserByIdQuery(userId)));
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult> DeleteUser()
+    {
+        return HandleResult(await Mediator.Send(new DeleteUserCommand()));
     }
 
     [HttpPost("add-photo")]

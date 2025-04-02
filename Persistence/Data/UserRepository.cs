@@ -6,6 +6,8 @@ namespace Persistence.Data;
 
 public class UserRepository(AppDbContext context) : IUserRepository
 {
+    public void DeleteUser(User user) => context.Users.Remove(user);
+
     public async Task<IReadOnlyList<User>> GetAllAsync(string? search)
     {
         var query = context.Users.AsQueryable();

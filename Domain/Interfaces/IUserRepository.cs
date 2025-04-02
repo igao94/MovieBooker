@@ -6,4 +6,5 @@ public interface IUserRepository
 {
     Task<User?> GetByIdAsync(string userId);
     Task<IReadOnlyList<User>> GetAllAsync(string search);
+    void DeleteUser(User user);
 }
