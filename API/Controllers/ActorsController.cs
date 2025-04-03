@@ -1,10 +1,12 @@
 ﻿using Application.Actors.Commands.AddActorToMovie;
+using Application.Actors.Commands.AddPhotoToActor;
 using Application.Actors.Commands.CreateActor;
 using Application.Actors.Commands.DeleteActor;
 using Application.Actors.Commands.UpdateActor;
 using Application.Actors.DTOs;
 using Application.Actors.Queries.GetActorById;
 using Application.Actors.Queries.GetAllActors;
+using Application.Users.Commands.AddPhoto;
 using Domain.Common.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,11 +35,11 @@ public class ActorsController : BaseApiController
         var result = await Mediator.Send(new CreateActorCommand(createActorDto));
 
         return HandleCreatedResult(result,
-            nameof(GetActorById), 
-            new { id = result.Value?.Id }, 
+            nameof(GetActorById),
+            new { id = result.Value?.Id },
             result.Value);
     }
-    
+
     [Authorize(Policy = PolicyTypes.RequireAdminRole)]
     [HttpPost("add-actor-to-movie")]
     public async Task<ActionResult> AddActorToMovie(AddActorToMovieCommand command)
@@ -59,5 +61,12 @@ public class ActorsController : BaseApiController
         updateActorDto.Id = id;
 
         return HandleResult(await Mediator.Send(new UpdateActorCommand(updateActorDto)));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpPost("add-actor-photo")]
+    public async Task<ActionResult> AddPhotoToActor([FromForm] AddPhotoToActorCommand command)
+    {
+        return HandleResult(await Mediator.Send(command));
     }
 }

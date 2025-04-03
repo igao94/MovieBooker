@@ -6,4 +6,5 @@ public class Actor : BaseEntity
     public string? PictureUrl { get; set; }
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
     public ICollection<MovieActor> Movies { get; set; } = [];
+    public ICollection<ActorPhoto> Photos { get; set; } = [];
 }
