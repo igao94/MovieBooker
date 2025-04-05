@@ -15,4 +15,5 @@ public class Movie : BaseEntity
     public bool IsActive { get; set; }
     public ICollection<MovieActor> Actors { get; set; } = [];
     public ICollection<Showtime> Showtimes { get; set; } = [];
+    public ICollection<MoviePoster> MoviePosters { get; set; } = [];
 }

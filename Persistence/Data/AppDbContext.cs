@@ -15,6 +15,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     public DbSet<ShowtimeSeatReservation> ShowtimeSeatReservations { get; set; }
     public DbSet<UserPhoto> UserPhotos { get; set; }
     public DbSet<ActorPhoto> ActorPhotos { get; set; }
+    public DbSet<MoviePoster> MoviePosters { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
