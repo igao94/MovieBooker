@@ -1,4 +1,5 @@
 ﻿using Application.Movies.Commands.AddMovie;
+using Application.Movies.Commands.AddMoviePoster;
 using Application.Movies.Commands.DeleteMovie;
 using Application.Movies.Commands.ToggleActiveMovie;
 using Application.Movies.Commands.UpdateMovie;
@@ -33,8 +34,8 @@ public class MoviesController : BaseApiController
         var result = await Mediator.Send(new AddMovieCommand(movieDto));
 
         return HandleCreatedResult(result,
-            nameof(GetMovieById), 
-            new { id = result.Value?.Id }, 
+            nameof(GetMovieById),
+            new { id = result.Value?.Id },
             result.Value);
     }
 
@@ -59,5 +60,12 @@ public class MoviesController : BaseApiController
     public async Task<ActionResult> ToggleActiveMovie(string id)
     {
         return HandleResult(await Mediator.Send(new ToggleActiveMovieCommand(id)));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpPost("upload-poster")]
+    public async Task<ActionResult> UploadPoster([FromForm] AddMoviePosterCommand command)
+    {
+        return HandleResult(await Mediator.Send(command));
     }
 }
