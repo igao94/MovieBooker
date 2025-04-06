@@ -28,6 +28,8 @@ public class AddMoviePosterHandler(IUnitOfWork unitOfWork,
 
         movie.PosterUrl ??= poster.Url;
 
+        unitOfWork.Repository<MoviePoster>().Add(poster);
+
         var result = await unitOfWork.CompleteAsync();
 
         return result
