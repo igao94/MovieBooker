@@ -1,6 +1,7 @@
 ﻿using Application.Movies.Commands.AddMovie;
 using Application.Movies.Commands.AddMoviePoster;
 using Application.Movies.Commands.DeleteMovie;
+using Application.Movies.Commands.DeleteMoviePoster;
 using Application.Movies.Commands.ToggleActiveMovie;
 using Application.Movies.Commands.UpdateMovie;
 using Application.Movies.DTOs;
@@ -67,5 +68,12 @@ public class MoviesController : BaseApiController
     public async Task<ActionResult> UploadPoster([FromForm] AddMoviePosterCommand command)
     {
         return HandleResult(await Mediator.Send(command));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpDelete("delete-poster/{posterId}")]
+    public async Task<ActionResult> DeletePoster(string posterId)
+    {
+        return HandleResult(await Mediator.Send(new DeleteMoviePosterCommand(posterId)));
     }
 }
