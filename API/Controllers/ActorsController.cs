@@ -2,11 +2,11 @@
 using Application.Actors.Commands.AddPhotoToActor;
 using Application.Actors.Commands.CreateActor;
 using Application.Actors.Commands.DeleteActor;
+using Application.Actors.Commands.DeleteActorPhoto;
 using Application.Actors.Commands.UpdateActor;
 using Application.Actors.DTOs;
 using Application.Actors.Queries.GetActorById;
 using Application.Actors.Queries.GetAllActors;
-using Application.Users.Commands.AddPhoto;
 using Domain.Common.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -68,5 +68,12 @@ public class ActorsController : BaseApiController
     public async Task<ActionResult> AddPhotoToActor([FromForm] AddPhotoToActorCommand command)
     {
         return HandleResult(await Mediator.Send(command));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpDelete("delete-actor-photo/{photoId}")]
+    public async Task<ActionResult> DeleteActorPhoto(string photoId)
+    {
+        return HandleResult(await Mediator.Send(new DeleteActorPhotoCommand(photoId)));
     }
 }
