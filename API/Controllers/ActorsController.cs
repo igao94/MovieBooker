@@ -6,6 +6,7 @@ using Application.Actors.Commands.DeleteActorPhoto;
 using Application.Actors.Commands.UpdateActor;
 using Application.Actors.DTOs;
 using Application.Actors.Queries.GetActorById;
+using Application.Actors.Queries.GetActorPhotos;
 using Application.Actors.Queries.GetAllActors;
 using Domain.Common.Constants;
 using Microsoft.AspNetCore.Authorization;
@@ -75,5 +76,12 @@ public class ActorsController : BaseApiController
     public async Task<ActionResult> DeleteActorPhoto(string photoId)
     {
         return HandleResult(await Mediator.Send(new DeleteActorPhotoCommand(photoId)));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpGet("actor-photos/{actorId}")]
+    public async Task<ActionResult> GetActorPhotos(string actorId)
+    {
+        return HandleResult(await Mediator.Send(new GetActorPhotosQuery(actorId)));
     }
 }

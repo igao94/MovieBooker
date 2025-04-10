@@ -1,5 +1,7 @@
-﻿using Application.Core;
+﻿using Application.Actors.DTOs;
+using Application.Core;
 using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
@@ -7,17 +9,18 @@ using MediatR;
 namespace Application.Actors.Commands.AddPhotoToActor;
 
 public class AddPhotoToActorHandler(IUnitOfWork unitOfWork,
-    IPhotoService photoService) : IRequestHandler<AddPhotoToActorCommand, Result<Unit>>
+    IPhotoService photoService,
+    IMapper mapper) : IRequestHandler<AddPhotoToActorCommand, Result<ActorPhotoDto>>
 {
-    public async Task<Result<Unit>> Handle(AddPhotoToActorCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ActorPhotoDto>> Handle(AddPhotoToActorCommand request, CancellationToken cancellationToken)
     {
         var actor = await unitOfWork.Repository<Actor>().GetByIdAsync(request.ActorId);
 
-        if (actor is null) return Result<Unit>.Failure("Actor not found.", 404);
+        if (actor is null) return Result<ActorPhotoDto>.Failure("Actor not found.", 404);
 
         var uploadResult = await photoService.UploadPhotoAsync(request.File);
 
-        if (uploadResult is null) return Result<Unit>.Failure("Failed to upload photo.", 400);
+        if (uploadResult is null) return Result<ActorPhotoDto>.Failure("Failed to upload photo.", 400);
 
         var photo = new ActorPhoto
         {
@@ -33,7 +36,7 @@ public class AddPhotoToActorHandler(IUnitOfWork unitOfWork,
         var result = await unitOfWork.CompleteAsync();
 
         return result
-            ? Result<Unit>.Success(Unit.Value)
-            : Result<Unit>.Failure("Failed to save photo to database.", 400);
+            ? Result<ActorPhotoDto>.Success(mapper.Map<ActorPhotoDto>(photo))
+            : Result<ActorPhotoDto>.Failure("Failed to save photo to database.", 400);
     }
 }
