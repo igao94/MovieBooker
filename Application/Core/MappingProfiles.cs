@@ -37,5 +37,7 @@ public class MappingProfiles : Profile
         CreateMap<User, UserDto>();
 
         CreateMap<ActorPhoto, ActorPhotoDto>();
+
+        CreateMap<MoviePoster, MoviePosterDto>();
     }
 }
