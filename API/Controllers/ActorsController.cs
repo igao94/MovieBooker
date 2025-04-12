@@ -3,6 +3,7 @@ using Application.Actors.Commands.AddPhotoToActor;
 using Application.Actors.Commands.CreateActor;
 using Application.Actors.Commands.DeleteActor;
 using Application.Actors.Commands.DeleteActorPhoto;
+using Application.Actors.Commands.SetMainActorPhoto;
 using Application.Actors.Commands.UpdateActor;
 using Application.Actors.DTOs;
 using Application.Actors.Queries.GetActorById;
@@ -83,5 +84,12 @@ public class ActorsController : BaseApiController
     public async Task<ActionResult> GetActorPhotos(string actorId)
     {
         return HandleResult(await Mediator.Send(new GetActorPhotosQuery(actorId)));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpPut("set-main-photo")]
+    public async Task<ActionResult> SetMainActorPhoto(SetMainActorPhotoCommand command)
+    {
+        return HandleResult(await Mediator.Send(command));
     }
 }
