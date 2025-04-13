@@ -2,6 +2,7 @@
 using Application.Movies.Commands.AddMoviePoster;
 using Application.Movies.Commands.DeleteMovie;
 using Application.Movies.Commands.DeleteMoviePoster;
+using Application.Movies.Commands.SetMainPoster;
 using Application.Movies.Commands.ToggleActiveMovie;
 using Application.Movies.Commands.UpdateMovie;
 using Application.Movies.DTOs;
@@ -83,5 +84,12 @@ public class MoviesController : BaseApiController
     public async Task<ActionResult> GetMoviePoster(string movieId)
     {
         return HandleResult(await Mediator.Send(new GetMoviePostersQuery(movieId)));
+    }
+
+    [Authorize(Policy = PolicyTypes.RequireAdminRole)]
+    [HttpPut("set-main-poster")]
+    public async Task<ActionResult> SetMainPoster(SetMainPosterCommand command)
+    {
+        return HandleResult((await Mediator.Send(command)));
     }
 }
