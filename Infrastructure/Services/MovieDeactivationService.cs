@@ -27,9 +27,9 @@ public class MovieDeactivationService(IServiceScopeFactory scopeFactory) : Backg
 
         var moviesToDeactivate = await context.Movies
             .Include(m => m.Showtimes)
-            .Where(m => m.IsActive && !m.Showtimes.Any(s => s.StartTime > DateTime.UtcNow))
+            .Where(m => m.IsActive && !m.Showtimes.Any(s => s.EndTime > DateTime.UtcNow))
             .ToListAsync();
-                  
+
         if (moviesToDeactivate.Count != 0)
         {
             foreach (var movie in moviesToDeactivate)
@@ -38,8 +38,8 @@ public class MovieDeactivationService(IServiceScopeFactory scopeFactory) : Backg
 
                 movie.Showtimes.Clear();
             }
-        }
 
-        await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
+        }
     }
 }
