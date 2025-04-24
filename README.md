@@ -1,6 +1,6 @@
 # 🎬 MovieBooker Web API
 
-This is an ASP.NET Core 8.0 Web API application for managing cinema showtimes, seat reservations, and user accounts. 
+This is an ASP.NET Core 8.0 Web API application built using **Clean Architecture** for managing cinema showtimes, seat reservations, and user accounts. 
 The app allows user registration, movie browsing, seat booking, and integration with Stripe for payments. 
 It's preconfigured with an In-Memory database for easy testing but can easily be switched to SQL Server.
 
@@ -42,6 +42,7 @@ It's preconfigured with an In-Memory database for easy testing but can easily be
 - ASP.NET Core Web API
 - Entity Framework Core
 - Microsoft Identity
+- MediatR
 - Cloudinary
 - Stripe
 - AutoMapper
