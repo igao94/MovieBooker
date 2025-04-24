@@ -1,0 +1,1445 @@
+{
+	"info": {
+		"_postman_id": "568421e7-37b8-4160-a42f-94bb5bd7910c",
+		"name": "MovieBooker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31602318"
+	},
+	"item": [
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Get movies",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/movies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "moviesAsc",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "moviesDesc",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "avengers",
+									"disabled": true
+								},
+								{
+									"key": "genres",
+									"value": "thriller, drama, sci",
+									"disabled": true
+								},
+								{
+									"key": "actors",
+									"value": "robert,morgan",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get movie",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/movies/avengers-Id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"avengers-Id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add movie",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Title\": \"Thor: Ragnarok\",\r\n    \"Genre\": \"Action, Adventure, Comedy\",\r\n    \"Description\": \"Thor must escape the alien planet Sakaar in time to save Asgard from Hela and the impending Ragnarok.\",\r\n    \"ReleaseDate\": \"2017-11-03\",\r\n    \"Director\": \"Taika Waititi\",\r\n    \"Language\": \"English\",\r\n    \"Duration\": \"2 hours, 10 minutes\",\r\n    \"Rating\": 7.9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/movies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update movie",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Title\": \"Thor: Ragnarok updated\",\r\n    \"Genre\": \"Action, Adventure, Comedy updated\",\r\n    \"Description\": \"Thor must escape the alien planet Sakaar in time to save Asgard from Hela and the impending Ragnarok.\",\r\n    \"ReleaseDate\": \"2017-11-03\",\r\n    \"Director\": \"Taika Waititi\",\r\n    \"Language\": \"English\",\r\n    \"Duration\": \"2 hours, 10 minutes\",\r\n    \"Rating\": 7.9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/movies/45d23d8a-c84c-4a24-98de-820294f33b20",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"45d23d8a-c84c-4a24-98de-820294f33b20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete movie",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/movies/9cd23f87-8114-4af6-92aa-b778e3eec648",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"9cd23f87-8114-4af6-92aa-b778e3eec648"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle active movie",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/movies/toggle-active-movie/avengers-id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"toggle-active-movie",
+								"avengers-id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload poster",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Id",
+									"value": "spiderman-id",
+									"type": "text"
+								},
+								{
+									"key": "File",
+									"type": "file",
+									"src": "/C:/Users/Korisnik/Desktop/Spiderman.webp"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/movies/upload-poster",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"upload-poster"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete poster",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/movies/delete-poster/11aaf21f-6dc2-4555-aa6f-224d2169b12b",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"delete-poster",
+								"11aaf21f-6dc2-4555-aa6f-224d2169b12b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get movie posters",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/movies/movie-posters/spiderman-id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"movie-posters",
+								"spiderman-id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set main poster",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"movieId\": \"avengers-Id\",\r\n    \"posterId\": \"95790ce4-201f-4769-84ad-b93175369a46\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/movies/set-main-poster",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"set-main-poster"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyM2UwNmZlMi0yNWQ5LTQ2N2ItYWM4Mi04ZTRhYjRkNjcwNzUiLCJ1bmlxdWVfbmFtZSI6Imlnb3IiLCJlbWFpbCI6Imlnb3JAdGVzdC5jb20iLCJyb2xlIjoiVXNlciIsIm5iZiI6MTc0MjU2Mzk3MSwiZXhwIjoxNzQyNjUwMzcxLCJpYXQiOjE3NDI1NjM5NzEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJNb3ZpZUJvb2tlciJ9.vrXIqdP7JMG7UIOjAkuH96JfDxdP2Khp-89LEevige2F7OUOTe40UpswFQ8fuC6p7OiU0gRr4Srj067M3CPEyA",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Igor\",\r\n    \"lastName\": \"Milosavljevic\",\r\n    \"email\": \"igor@test.com\",\r\n    \"username\": \"igor\",\r\n    \"password\": \"Pa$$w0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/accounts/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log in as admin and save token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Has properties\", function () {\r",
+									"    pm.expect(user).to.have.property('username');\r",
+									"    pm.expect(user).to.have.property('token');\r",
+									"});\r",
+									"\r",
+									"if (pm.test(\"Has properties\")) {\r",
+									"    pm.collectionVariables.set('token', user.token);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@test.com\",\r\n    \"password\": \"Pa$$w0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/accounts/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log in and save token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Has properties\", function () {\r",
+									"    pm.expect(user).to.have.property('username');\r",
+									"    pm.expect(user).to.have.property('token');\r",
+									"});\r",
+									"\r",
+									"if (pm.test(\"Has properties\")) {\r",
+									"    pm.collectionVariables.set('token', user.token);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"emily@test.com\",\r\n    \"password\": \"Pa$$w0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/accounts/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user info",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/accounts/current-user-info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"current-user-info"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyM2UwNmZlMi0yNWQ5LTQ2N2ItYWM4Mi04ZTRhYjRkNjcwNzUiLCJ1bmlxdWVfbmFtZSI6Imlnb3IiLCJlbWFpbCI6Imlnb3JAdGVzdC5jb20iLCJyb2xlIjoiVXNlciIsIm5iZiI6MTc0MjU1NjAzMiwiZXhwIjoxNzQyNjQyNDMyLCJpYXQiOjE3NDI1NTYwMzIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJNb3ZpZUJvb2tlciJ9.0QrnPEIGekF_jI3WpJa-BIWyQmzWdE0rJfaXK8XUbdnKz9g1hSdSUKuDMrOpVgEKMkNkljr2kRjvoEGu8bAjIQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Actors",
+			"item": [
+				{
+					"name": "Get actors",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/actors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "actorsAsc",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "actorsDesc",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "robert",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get actor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/actors/08238216-3702-4d67-ad64-3bbccfa613ea",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors",
+								"08238216-3702-4d67-ad64-3bbccfa613ea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add actor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"Robert Downey Jr.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/actors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update actor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"Robert Downey Jr. updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/actors/c9a4403a-0c2c-4cd5-9f5c-a2804daa472e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors",
+								"c9a4403a-0c2c-4cd5-9f5c-a2804daa472e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add actor to movie",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"movieId\": \"avengers-id\",\r\n    \"actorId\": \"564029ad-b4ad-46cf-944b-05fa5de13ac2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/actors/add-actor-to-movie",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors",
+								"add-actor-to-movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete actor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/actors/ce3cb4b5-11c3-4494-8b79-bb086e73d34d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors",
+								"ce3cb4b5-11c3-4494-8b79-bb086e73d34d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add photo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ActorId",
+									"value": "ce3cb4b5-11c3-4494-8b79-bb086e73d34d",
+									"type": "text"
+								},
+								{
+									"key": "File",
+									"type": "file",
+									"src": "/C:/Users/Korisnik/Desktop/Wonder Woman.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/actors/add-actor-photo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors",
+								"add-actor-photo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete photo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/actors/delete-actor-photo/d63823da-c200-479e-ba50-8d414d2f11b9",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors",
+								"delete-actor-photo",
+								"d63823da-c200-479e-ba50-8d414d2f11b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get actor photos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/actors/actor-photos/9e6f60ca-9209-422c-b1a0-95efd687ac4f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors",
+								"actor-photos",
+								"9e6f60ca-9209-422c-b1a0-95efd687ac4f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set main actor photo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"actorId\": \"9e6f60ca-9209-422c-b1a0-95efd687ac4f\",\r\n    \"photoId\": \"a05f3f43-43c5-4816-acb4-3fc6005ad43c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/actors/set-main-photo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"actors",
+								"set-main-photo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Showtimes",
+			"item": [
+				{
+					"name": "Get showtimes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/showtimes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"showtimes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get showtime by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/showtimes/1b2803b6-7ac8-4d0e-b7e4-685057aa65cf",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"showtimes",
+								"1b2803b6-7ac8-4d0e-b7e4-685057aa65cf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add showtime",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"movieId\": \"avengers-id\",\r\n    \"startTime\": \"2025-04-02T20:00:00Z\",\r\n    \"endTime\": \"2025-04-09T20:00:00Z\",\r\n    \"availableSeats\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/showtimes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"showtimes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update showtime",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startTime\": \"2025-03-29T20:00:00Z\",\r\n    \"availableSeats\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/showtimes/e694d24a-d2cb-48ef-bab2-d2b6f537fe1c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"showtimes",
+								"e694d24a-d2cb-48ef-bab2-d2b6f537fe1c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete showtime",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/showtimes/cbb3a0b3-379e-4546-8bcd-34bcdbbe664c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"showtimes",
+								"cbb3a0b3-379e-4546-8bcd-34bcdbbe664c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get available seats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"showtimeId\": \"d0b55e6d-077a-44ff-a993-2ec3cbeccc48\",\r\n    \"date\" : \"2025-04-02T20:00:00Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/showtimes/available-seats",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"showtimes",
+								"available-seats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve seat",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"showtimeSeatId\": \"6ec3da27-b536-4ae7-93af-a7524e5cabed\",\r\n    \"date\": \"2025-04-02T20:00:00Z\",\r\n    \"price\": 5.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/showtimes/reserve-seat",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"showtimes",
+								"reserve-seat"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users/get-all-users?search=emily",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"get-all-users"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "emily"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users/get-user/admin-id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"get-user",
+								"admin-id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add photo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "File",
+									"type": "file",
+									"src": "/C:/Users/Korisnik/Desktop/Spiderman.webp"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/users/add-photo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"add-photo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete photo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users/delete-photo/8999b269-5d15-477b-85f8-133904563c4d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"delete-photo",
+								"8999b269-5d15-477b-85f8-133904563c4d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set main photo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users/set-main-photo/adc73649-dde3-43f6-8efa-2b842d0553dc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"set-main-photo",
+								"adc73649-dde3-43f6-8efa-2b842d0553dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user photos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users/user-photos/admin-id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"user-photos",
+								"admin-id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://localhost:5001",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
