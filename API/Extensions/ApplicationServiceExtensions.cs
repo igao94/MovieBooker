@@ -33,7 +33,7 @@ public static class ApplicationServiceExtensions
 
             if (useInMemoryDatabase)
             {
-                options.UseInMemoryDatabase(config.GetConnectionString("InMemoryDatabase")!);
+                options.UseInMemoryDatabase("InMemoryDatabase");
             }
             else
             {
