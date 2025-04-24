@@ -10,6 +10,10 @@ public class ShowtimeSeatConfiguration : IEntityTypeConfiguration<ShowtimeSeat>
     {
         builder.HasQueryFilter(ss => ss.Showtime.Movie.IsActive);
 
+        builder.Property(ss => ss.Price).HasColumnType("decimal(18,2)");
+
+        builder.Property(ss => ss.Currency).IsRequired();
+
         builder.HasOne(ss => ss.Showtime)
             .WithMany(st => st.ShowtimeSeats)
             .HasForeignKey(ss => ss.ShowtimeId)

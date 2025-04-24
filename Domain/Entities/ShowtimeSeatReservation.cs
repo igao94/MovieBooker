@@ -8,4 +8,5 @@ public class ShowtimeSeatReservation : BaseEntity
     public string? UserId { get; set; }
     public User? User { get; set; }
     public bool IsReserved { get; set; }
+    public string StripePaymentIntentId { get; set; } = string.Empty;
 }

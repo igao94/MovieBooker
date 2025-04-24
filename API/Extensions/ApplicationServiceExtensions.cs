@@ -72,6 +72,8 @@ public static class ApplicationServiceExtensions
 
         services.AddScoped<IPhotoService, PhotoService>();
 
+        services.AddScoped<IPaymentService, PaymentService>();
+
         return services;
     }
 }

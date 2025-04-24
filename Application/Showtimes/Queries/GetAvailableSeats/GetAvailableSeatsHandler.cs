@@ -67,6 +67,8 @@ public class GetAvailableSeatsHandler(IUnitOfWork unitOfWork)
             {
                 Id = s.Id,
                 SeatNumber = s.SeatNumber,
+                Price = s.Price,
+                Currency = s.Currency
             })
             .OrderBy(seat => seat.SeatNumber)
             .ToList();

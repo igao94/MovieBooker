@@ -68,7 +68,9 @@ public class AddShowTimeHandler(IUnitOfWork unitOfWork,
             .Select(seatNumber => new ShowtimeSeat
             {
                 ShowtimeId = showtimeId,
-                SeatNumber = seatNumber
+                SeatNumber = seatNumber,
+                Price = 5m,
+                Currency = "eur"
             })
             .ToList();
 

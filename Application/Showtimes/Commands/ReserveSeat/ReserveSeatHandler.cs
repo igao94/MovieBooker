@@ -9,9 +9,10 @@ using Persistence.Specifications.ShowtimeSeatsSpecification;
 namespace Application.Showtimes.Commands.ReserveSeat;
 
 public class ReserveSeatHandler(IUnitOfWork unitOfWork,
-    IUserAccessor userAccessor) : IRequestHandler<ReserveSeatCommand, Result<Unit>>
+    IUserAccessor userAccessor,
+    IPaymentService paymentService) : IRequestHandler<ReserveSeatCommand, Result<string>>
 {
-    public async Task<Result<Unit>> Handle(ReserveSeatCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(ReserveSeatCommand request, CancellationToken cancellationToken)
     {
         var userId = userAccessor.GetUserId();
 
@@ -19,15 +20,15 @@ public class ReserveSeatHandler(IUnitOfWork unitOfWork,
 
         var seat = await unitOfWork.Repository<ShowtimeSeat>().GetEntityWithSpecAsync(seatSpec);
 
-        if (seat is null) return Result<Unit>.Failure("Seat not found.", 404);
+        if (seat is null) return Result<string>.Failure("Seat not found.", 404);
 
         var showtimeStartTime = seat.Showtime.StartTime.TimeOfDay;
 
         if (request.Date.TimeOfDay != showtimeStartTime)
-            return Result<Unit>.Failure($"Please choose valid time, movie starts at {showtimeStartTime}.", 400);
+            return Result<string>.Failure($"Please choose valid time, movie starts at {showtimeStartTime}.", 400);
 
         if (request.Date < seat.Showtime.StartTime || request.Date > seat.Showtime.EndTime)
-            return Result<Unit>.Failure("Date is out of showtime range.", 400);
+            return Result<string>.Failure("Date is out of showtime range.", 400);
 
         var spec = new SeatReservationBySeatIdSpecification(request.ShowtimeSeatId, request.Date);
 
@@ -35,14 +36,21 @@ public class ReserveSeatHandler(IUnitOfWork unitOfWork,
             .GetEntityWithSpecAsync(spec);
 
         if (seatReservation is not null && seatReservation.IsReserved)
-            return Result<Unit>.Failure("Seat is already reserved for this date.", 400);
+            return Result<string>.Failure("Seat is already reserved for this date.", 400);
+
+        var amount = seat.Price;
+
+        if (request.Price != amount) return Result<string>.Failure($"Valid price is: {amount}.", 400);
+
+        var paymentIntent = await paymentService.CreatePaymentIntentAsync(amount);
 
         var reservation = new ShowtimeSeatReservation
         {
             ShowtimeSeatId = request.ShowtimeSeatId,
             ReservedDate = request.Date,
             UserId = userId,
-            IsReserved = true
+            IsReserved = true,
+            StripePaymentIntentId = paymentIntent.PaymentIntentId
         };
 
         unitOfWork.Repository<ShowtimeSeatReservation>().Add(reservation);
@@ -50,7 +58,7 @@ public class ReserveSeatHandler(IUnitOfWork unitOfWork,
         var result = await unitOfWork.CompleteAsync();
 
         return result
-            ? Result<Unit>.Success(Unit.Value)
-            : Result<Unit>.Failure("Failed to reserve seat.", 400);
+            ? Result<string>.Success(paymentIntent.ClientSecret)
+            : Result<string>.Failure("Failed to reserve seat.", 400);
     }
 }

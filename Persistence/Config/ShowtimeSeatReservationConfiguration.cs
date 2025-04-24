@@ -10,6 +10,8 @@ public class ShowtimeSeatReservationConfiguration : IEntityTypeConfiguration<Sho
     {
         builder.HasQueryFilter(sr => sr.ShowtimeSeat.Showtime.Movie.IsActive);
 
+        builder.Property(sr => sr.StripePaymentIntentId).IsRequired();
+
         builder.HasOne(sr => sr.ShowtimeSeat)
             .WithMany(ss => ss.Reservations)
             .HasForeignKey(sr => sr.ShowtimeSeatId)
