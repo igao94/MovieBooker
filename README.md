@@ -29,6 +29,7 @@ It's preconfigured with an In-Memory database for easy testing but can easily be
   - A showtime represents a scheduled movie screening with start and end times.
   - Users can book seats for specific showtimes.
   - Reservations are paid through **Stripe** integration.
+  - Once a showtime ends, the corresponding movie is automatically marked as inactive, meaning it will no longer appear as currently playing.
 
 - 🧪 **Postman Collection**  
   - A **Postman collection** is included with all API endpoints for easy testing.
