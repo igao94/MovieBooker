@@ -57,3 +57,8 @@ It's preconfigured with an In-Memory database for easy testing but can easily be
    git bash - git clone https://github.com/igao94/MovieBooker
 
 2. Run the app using Visual Studio or the .NET CLI.
+
+## 🧑‍💻 Admin credentials
+
+- Email: admin@test.com
+- Password: Pa$$w0rd
